@@ -80,7 +80,7 @@ const Cases = () => {
     {
       id: 4,
       title: "ハイブランド SNS広告",
-      image: "/images/ハイブランドサムネ.png",
+      image: "/images/ハイブランドサムネ.jpg",
       url: "#",
     },
     {
