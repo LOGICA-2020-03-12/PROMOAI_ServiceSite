@@ -1,0 +1,251 @@
+"use client";
+import { useState, useEffect } from "react";
+import { motion, Variants } from "framer-motion";
+import { useInView } from "react-intersection-observer";
+import { FiArrowRight } from "react-icons/fi";
+import Link from "next/link";
+
+const Services = () => {
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  });
+
+  // カスタムカーソル用の状態
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [cursorVariant, setCursorVariant] = useState("default");
+
+  // マウスの位置を追跡
+  useEffect(() => {
+    const mouseMove = (e: MouseEvent) => {
+      setMousePosition({
+        x: e.clientX,
+        y: e.clientY,
+      });
+    };
+
+    window.addEventListener("mousemove", mouseMove);
+
+    return () => {
+      window.removeEventListener("mousemove", mouseMove);
+    };
+  }, []);
+
+  // カーソルのバリアント
+  const cursorVariants = {
+    default: {
+      x: mousePosition.x - 16,
+      y: mousePosition.y - 16,
+      backgroundColor: "transparent",
+      boxShadow: "0 0 15px rgba(255, 255, 255, 0.3), inset 0 0 10px rgba(255, 255, 255, 0.2)",
+      border: "1.5px solid rgba(255, 255, 255, 0.6)",
+      scale: 1,
+    },
+    hover: {
+      x: mousePosition.x - 30,
+      y: mousePosition.y - 30,
+      height: 60,
+      width: 60,
+      backgroundColor: "rgba(255, 255, 255, 0.03)",
+      boxShadow: "0 0 20px rgba(255, 255, 255, 0.4), inset 0 0 15px rgba(255, 255, 255, 0.1)",
+      border: "1.5px solid rgba(255, 255, 255, 0.8)",
+      scale: 1.05,
+    },
+  };
+
+  // ホバー状態の変更関数
+  const enterHover = () => setCursorVariant("hover");
+  const leaveHover = () => setCursorVariant("default");
+
+  // サービス一覧
+  const services = [
+    {
+      id: "promo-video",
+      title: "広告用のプロモーション動画制作",
+      description: "商品やサービスの魅力を最大限に引き出すプロモーション動画を制作します。AI技術を活用した効率的な映像制作で、短納期・高品質を実現します。",
+      imageUrl: "/images/placeholder1.jpg", // 後で実際の画像に差し替え
+    },
+    {
+      id: "sns-operation",
+      title: "SNS運用／各種動画制作",
+      description: "SNSアカウントの運用代行から、投稿用の動画コンテンツ制作まで一貫してサポート。エンゲージメント向上につながるコンテンツ戦略を提案します。",
+      imageUrl: "/images/placeholder2.jpg", // 後で実際の画像に差し替え
+    },
+    {
+      id: "ad-banner",
+      title: "Web／SNS用の広告バナー制作",
+      description: "クリック率を高めるWeb広告バナーやSNS投稿用バナーを制作。AI技術を活用したA/Bテストで最適なデザインを導き出します。",
+      imageUrl: "/images/placeholder3.jpg", // 後で実際の画像に差し替え
+    },
+    {
+      id: "ai-consult",
+      title: "DX推進／AIコンサル派遣",
+      description: "企業のDX推進をサポートするAI専門コンサルタントを派遣。業務効率化から新規事業創出まで、AI技術の活用方法を提案します。",
+      imageUrl: "/images/placeholder4.jpg", // 後で実際の画像に差し替え
+    },
+  ];
+
+  const containerVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+      },
+    },
+  };
+
+  const itemVariants: Variants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+      },
+    },
+  };
+
+  const titleVariants: Variants = {
+    hidden: { opacity: 0, x: -50 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        duration: 0.7,
+        ease: "easeOut",
+      },
+    },
+  };
+
+  return (
+    <section id="services" className="section-padding bg-dark cursor-none">
+      <div className="container-custom relative">
+        <div className="flex flex-col items-start mb-16">
+          <div className="flex items-center mb-6">
+            <div className="inline-block border border-white/30 rounded-full px-6 py-2">
+              <span className="text-white font-medium">Services</span>
+            </div>
+          </div>
+          
+          <motion.div
+            ref={ref}
+            initial="hidden"
+            animate={inView ? "visible" : "hidden"}
+            variants={titleVariants}
+            className="mb-8"
+          >
+            <h2 
+              className="text-6xl md:text-7xl font-bold tracking-tight text-white"
+              onMouseEnter={enterHover}
+              onMouseLeave={leaveHover}
+            >
+              サービス概要
+            </h2>
+          </motion.div>
+        </div>
+        
+        <div className="absolute right-0 top-0 z-10 pointer-events-none">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5, duration: 0.8 }}
+            className="text-right"
+          >
+            <h2 
+              className="text-5xl md:text-[8rem] font-bold tracking-tight leading-none"
+            >
+              <span className="bg-clip-text text-transparent bg-gradient-to-b from-white to-gray-400">
+                OFFERING
+              </span>
+            </h2>
+            <h2 
+              className="text-5xl md:text-[8rem] font-bold tracking-tight leading-none"
+            >
+              <span className="bg-clip-text text-transparent bg-gradient-to-b from-white to-gray-400">
+                SUMMARY.
+              </span>
+            </h2>
+          </motion.div>
+        </div>
+
+        {/* サブタイトルのテキストの高さ分、余白を追加 */}
+        <div className="pt-10 md:pt-20 lg:pt-28"></div>
+
+        {/* サービス一覧（2列表示） */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate={inView ? "visible" : "hidden"}
+          className="grid grid-cols-1 md:grid-cols-2 gap-8"
+        >
+          {services.map((service, index) => (
+            <motion.div
+              key={service.id}
+              variants={itemVariants}
+              className="bg-primary/30 backdrop-blur-sm rounded-lg overflow-hidden border border-white/10 hover:border-white/30 transition-all duration-300"
+              onMouseEnter={enterHover}
+              onMouseLeave={leaveHover}
+            >
+              {/* サムネイル画像エリア */}
+              <div className="w-full aspect-video relative bg-gray-800 flex items-center justify-center">
+                {/* 後で実際の画像を挿入するためのプレースホルダー */}
+                <div className="text-gray-500 flex flex-col items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                  <span>サービス画像</span>
+                </div>
+              </div>
+              
+              {/* コンテンツエリア */}
+              <div className="p-6">
+                <h3 className="text-xl font-bold mb-3 text-white">{service.title}</h3>
+                <p className="text-gray-300 mb-6 text-sm">{service.description}</p>
+                
+                {/* 詳細ページへのボタン */}
+                <Link 
+                  href={`/services/${service.id}`} 
+                  className="inline-flex items-center text-secondary hover:text-white transition-colors group"
+                >
+                  <span className="mr-2">詳細を見る</span>
+                  <FiArrowRight className="transform group-hover:translate-x-1 transition-transform" />
+                </Link>
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
+      </div>
+
+      {/* カスタムカーソル */}
+      <motion.div
+        className="custom-cursor fixed top-0 left-0 w-8 h-8 rounded-full pointer-events-none z-50"
+        variants={cursorVariants}
+        animate={cursorVariant}
+        transition={{
+          type: "spring",
+          stiffness: 500,
+          damping: 28,
+          mass: 0.5,
+        }}
+      />
+     
+      {/* カーソルの内側の点 */}
+      <motion.div
+        className="fixed w-1.5 h-1.5 bg-white rounded-full pointer-events-none z-50"
+        style={{
+          x: mousePosition.x - 0.75,
+          y: mousePosition.y - 0.75,
+        }}
+        transition={{
+          type: "spring",
+          stiffness: 800,
+          damping: 25,
+          mass: 0.2,
+        }}
+      />
+    </section>
+  );
+};
+
+export default Services; 
