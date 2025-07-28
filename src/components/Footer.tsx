@@ -3,8 +3,6 @@ import Link from "next/link";
 import { FiMail, FiInstagram, FiTwitter, FiYoutube } from "react-icons/fi";
 
 const Footer = () => {
-  const currentYear = new Date().getFullYear();
-
   return (
     <footer className="bg-black py-12 mb-16">
       <div className="container-custom">
@@ -50,20 +48,16 @@ const Footer = () => {
         <div className="border-t border-gray-800 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-500 text-sm mb-4 md:mb-0">
-              &copy; {currentYear} PROMO AI Inc. All rights reserved.
+              &copy; 2025 PROMO AI. All rights reserved.
             </p>
             <div className="flex space-x-6">
               <Link
-                href="/privacy"
+                href="https://logicajapan.co.jp/company/"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-gray-400 hover:text-white text-sm transition-colors"
               >
-                プライバシーポリシー
-              </Link>
-              <Link
-                href="/terms"
-                className="text-gray-400 hover:text-white text-sm transition-colors"
-              >
-                利用規約
+                運用会社
               </Link>
             </div>
           </div>
