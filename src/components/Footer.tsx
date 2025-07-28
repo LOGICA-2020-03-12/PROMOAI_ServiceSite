@@ -1,6 +1,5 @@
 "use client";
 import Link from "next/link";
-import { FiMail, FiInstagram, FiTwitter, FiYoutube } from "react-icons/fi";
 
 const Footer = () => {
   return (
@@ -10,38 +9,6 @@ const Footer = () => {
           <div className="mb-6 md:mb-0">
             <Link href="/" className="text-2xl font-bold text-secondary">
               PROMO AI
-            </Link>
-          </div>
-          <div className="flex space-x-4">
-            <Link
-              href="mailto:info@promoai.example.com"
-              className="text-gray-400 hover:text-secondary transition-colors"
-            >
-              <FiMail size={20} />
-            </Link>
-            <Link
-              href="https://instagram.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gray-400 hover:text-secondary transition-colors"
-            >
-              <FiInstagram size={20} />
-            </Link>
-            <Link
-              href="https://twitter.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gray-400 hover:text-secondary transition-colors"
-            >
-              <FiTwitter size={20} />
-            </Link>
-            <Link
-              href="https://youtube.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gray-400 hover:text-secondary transition-colors"
-            >
-              <FiYoutube size={20} />
             </Link>
           </div>
         </div>
