@@ -108,9 +108,7 @@ const Pricing = () => {
     <section id="pricing" className="section-padding bg-zinc-900">
       <div className="container-custom">
         <div className="text-center mb-16">
-          <div className="h-[1px] w-20 bg-gradient-to-r from-transparent via-amber-400 to-transparent mx-auto mb-6"></div>
-          <h2 className="text-5xl md:text-6xl font-bold tracking-tight text-white mb-4">価格</h2>
-          <div className="h-[1px] w-20 bg-gradient-to-r from-transparent via-amber-400 to-transparent mx-auto mt-6"></div>
+          <h2 className="text-5xl md:text-6xl font-bold tracking-tight text-white">価格</h2>
         </div>
 
         <motion.div

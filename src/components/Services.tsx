@@ -4,6 +4,7 @@ import { motion, Variants } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { FiArrowRight } from "react-icons/fi";
 import Link from "next/link";
+import Image from "next/image";
 
 const Services = () => {
   const [ref, inView] = useInView({
@@ -63,25 +64,25 @@ const Services = () => {
       id: "promo-video",
       title: "広告用のプロモーション動画制作",
       description: "商品やサービスの魅力を最大限に引き出すプロモーション動画を制作します。AI技術を活用した効率的な映像制作で、短納期・高品質を実現します。",
-      imageUrl: "/images/placeholder1.jpg", // 後で実際の画像に差し替え
+      imageUrl: "/images/広告プロモーション2.jpg",
     },
     {
       id: "sns-operation",
       title: "SNS運用／各種動画制作",
       description: "SNSアカウントの運用代行から、投稿用の動画コンテンツ制作まで一貫してサポート。エンゲージメント向上につながるコンテンツ戦略を提案します。",
-      imageUrl: "/images/placeholder2.jpg", // 後で実際の画像に差し替え
+      imageUrl: "/images/SNS運用.jpg",
     },
     {
       id: "ad-banner",
       title: "Web／SNS用の広告バナー制作",
       description: "クリック率を高めるWeb広告バナーやSNS投稿用バナーを制作。AI技術を活用したA/Bテストで最適なデザインを導き出します。",
-      imageUrl: "/images/placeholder3.jpg", // 後で実際の画像に差し替え
+      imageUrl: "/images/バナー制作.jpg",
     },
     {
       id: "ai-consult",
       title: "DX推進／AIコンサル派遣",
       description: "企業のDX推進をサポートするAI専門コンサルタントを派遣。業務効率化から新規事業創出まで、AI技術の活用方法を提案します。",
-      imageUrl: "/images/placeholder4.jpg", // 後で実際の画像に差し替え
+      imageUrl: "/images/DX推進.jpg",
     },
   ];
 
@@ -188,14 +189,16 @@ const Services = () => {
               onMouseLeave={leaveHover}
             >
               {/* サムネイル画像エリア */}
-              <div className="w-full aspect-video relative bg-gray-800 flex items-center justify-center">
-                {/* 後で実際の画像を挿入するためのプレースホルダー */}
-                <div className="text-gray-500 flex flex-col items-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
-                  <span>サービス画像</span>
-                </div>
+              <div className="w-full aspect-video relative bg-gray-800 overflow-hidden group">
+                <Image
+                  src={service.imageUrl}
+                  alt={service.title}
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-300"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                />
+                {/* ホバー時のオーバーレイ */}
+                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-300"></div>
               </div>
               
               {/* コンテンツエリア */}

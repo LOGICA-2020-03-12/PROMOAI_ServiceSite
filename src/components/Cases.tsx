@@ -61,38 +61,38 @@ const Cases = () => {
   const caseStudies = [
     {
       id: 1,
-      title: "JR西日本 クリスマスイベント SNS広告",
-      image: "/images/placeholder1.jpg",
+      title: "博多むぎ焼酎 プロモーション広告",
+      image: "/images/焼酎サムネ.jpg",
       url: "#",
     },
     {
       id: 2,
       title: "たこ焼き店舗プロモーション SNS広告",
-      image: "/images/placeholder2.jpg",
+      image: "/images/たこ焼きサムネ.jpg",
       url: "#",
     },
     {
       id: 3,
       title: "観光プロモーション SNS広告",
-      image: "/images/placeholder3.jpg",
+      image: "/images/観光CMサムネ.jpg",
       url: "#",
     },
     {
       id: 4,
       title: "ハイブランド SNS広告",
-      image: "/images/placeholder1.jpg",
+      image: "/images/ハイブランドサムネ.png",
       url: "#",
     },
     {
       id: 5,
       title: "ラーメン店舗プロモーション SNS広告",
-      image: "/images/placeholder2.jpg",
+      image: "/images/ラーメン屋サムネ.jpg",
       url: "#",
     },
     {
       id: 6,
       title: "老眼鏡 SNS広告",
-      image: "/images/placeholder3.jpg",
+      image: "/images/メガネ広告サムネ.jpg",
       url: "#",
     },
   ];
@@ -199,12 +199,21 @@ const Cases = () => {
               onMouseLeave={leaveHover}
             >
               <Link href={caseItem.url} className="block">
-                <div className="relative overflow-hidden aspect-video mb-4 bg-gray-800 border border-gray-700">
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="text-gray-500">動画サムネイル</span>
+                <div className="relative overflow-hidden aspect-video mb-4 bg-gray-800 border border-gray-700 rounded-lg group-hover:scale-105 transition-transform duration-300">
+                  <Image
+                    src={caseItem.image}
+                    alt={caseItem.title}
+                    fill
+                    className="object-cover"
+                  />
+                  {/* ホバー時のオーバーレイ */}
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
+                    <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-white text-sm font-medium">
+                      詳細を見る
+                    </div>
                   </div>
                 </div>
-                <h3 className="text-white text-xl font-medium">{caseItem.title}</h3>
+                <h3 className="text-white text-xl font-medium group-hover:text-gray-300 transition-colors duration-300">{caseItem.title}</h3>
               </Link>
             </motion.div>
           ))}

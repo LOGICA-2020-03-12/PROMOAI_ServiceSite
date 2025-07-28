@@ -215,23 +215,45 @@ const LoadingScreen = () => {
                 </svg>
               </motion.div>
               
-              {/* プログレスバー */}
-              <div className="relative w-96 overflow-hidden">
-                <div className="h-[1px] bg-white/10 overflow-hidden backdrop-blur-sm">
+              {/* 洗練されたプログレスバー */}
+              <div className="relative w-96 mb-4">
+                {/* ゲージの外枠 */}
+                <div className="relative h-4 bg-black/30 border border-white/40 rounded-full overflow-hidden backdrop-blur-sm">
+                  {/* ゲージの背景 */}
+                  <div className="absolute inset-0.5 bg-gradient-to-r from-white/5 to-white/2 rounded-full"></div>
+                  
+                  {/* メインのゲージバー */}
                   <motion.div
                     variants={lineVariants}
                     initial="hidden"
                     animate="visible"
-                    className="h-full bg-gradient-to-r from-white/70 via-white to-white/70"
-                  />
+                    className="h-full bg-gradient-to-r from-white/90 via-white/70 to-white/90 relative overflow-hidden rounded-full"
+                  >
+                    {/* ゲージ内の光沢効果 */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-transparent via-white/20 to-transparent rounded-full"></div>
+                    
+                    {/* ゲージ内の微細なパターン */}
+                    <div className="absolute inset-0 opacity-30">
+                      <div className="h-full w-full bg-gradient-to-r from-transparent via-white/10 to-transparent animate-pulse rounded-full"></div>
+                    </div>
+                  </motion.div>
+                  
+                  {/* ゲージの境界線エフェクト */}
+                  <div className="absolute inset-0 border border-white/20 rounded-full pointer-events-none"></div>
                 </div>
                 
-                {/* 装飾的な光の点 */}
+                {/* ゲージのラベル */}
+                <div className="absolute -top-6 left-0 text-white/70 text-xs font-medium tracking-widest">
+                  LOADING
+                </div>
+                
+                {/* 洗練された光の点 */}
                 <motion.div 
-                  className="absolute top-1/2 h-1 w-1 bg-white rounded-full -translate-y-1/2 blur-[1px]"
+                  className="absolute top-1/2 h-1 w-1 bg-white rounded-full -translate-y-1/2 shadow-sm shadow-white/30"
                   animate={{ 
                     x: ['0%', '100%'],
-                    opacity: [0, 1, 0]
+                    opacity: [0, 1, 0],
+                    scale: [0.3, 1, 0.3]
                   }}
                   transition={{ 
                     duration: 2,
@@ -241,15 +263,7 @@ const LoadingScreen = () => {
                 />
               </div>
               
-              {/* テキスト */}
-              <motion.p
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.5, duration: 0.5 }}
-                className="mt-8 text-xs text-white/50 uppercase tracking-[0.3em] font-light"
-              >
-                LOADING
-              </motion.p>
+
             </div>
           </div>
         </motion.div>
