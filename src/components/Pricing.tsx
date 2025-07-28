@@ -2,6 +2,7 @@
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { FiCheck } from "react-icons/fi";
+import Link from "next/link";
 
 const Pricing = () => {
   const [ref, inView] = useInView({
@@ -10,7 +11,7 @@ const Pricing = () => {
   });
 
   // 機能のキーの型を定義
-  type FeatureKey = 'monthly' | 'sns' | 'weekly' | 'abTesting' | 'dashboard' | 'shooting' | 'massProduction' | 'aiBot' | 'school';
+  type FeatureKey = 'monthly' | 'sns' | 'weekly' | 'dashboard' | 'shooting';
 
   // 料金プランの型を定義
   interface PricingPlan {
@@ -22,65 +23,49 @@ const Pricing = () => {
 
   const pricingData: PricingPlan[] = [
     {
-      name: "スタート",
-      price: "XXX,000",
+      name: "SNS動画",
+      price: "30,000",
       features: {
-        monthly: "月◯本ショート",
-        sns: "SNS 基本運用",
+        monthly: "5本〜/月",
+        sns: "Instagram/TikTok/YouTube",
+        weekly: "1本〜/週",
+        dashboard: "リアルタイム共有",
+        shooting: "可能/AIアバターの使用可"
+      },
+      isPopular: false,
+    },
+    {
+      name: "プロモーション広告動画",
+      price: "200,000",
+      features: {
+        monthly: "―",
+        sns: "―",
         weekly: "―",
-        abTesting: "―",
         dashboard: "―",
-        shooting: "―",
-        massProduction: "―",
-        aiBot: "―",
-        school: "―"
+        shooting: "可能/AIアバター使用可"
       },
       isPopular: false,
     },
     {
-      name: "グロース",
-      price: "XXX,000",
+      name: "バナー制作",
+      price: "5,000",
       features: {
-        monthly: "月◯本ショート",
-        sns: "SNS 基本運用",
-        weekly: "週次投稿",
-        abTesting: "広告 AB",
-        dashboard: "ダッシュボード",
-        shooting: "―",
-        massProduction: "―",
-        aiBot: "―",
-        school: "―"
-      },
-      isPopular: false,
-    },
-    {
-      name: "シングル",
-      price: "XXX,000",
-      features: {
-        monthly: "月◯本ショート",
-        sns: "SNS 基本運用",
-        weekly: "週次投稿",
-        abTesting: "広告 AB",
-        dashboard: "ダッシュボード",
-        shooting: "撮影",
-        massProduction: "量産",
-        aiBot: "AI Bot",
-        school: "スクール構築"
+        monthly: "20枚〜/月",
+        sns: "―",
+        weekly: "―",
+        dashboard: "―",
+        shooting: "―"
       },
       isPopular: false,
     },
   ];
 
   const featureLabels: Record<FeatureKey, string> = {
-    monthly: "月間動画本数",
+    monthly: "月間制作数",
     sns: "SNS運用",
-    weekly: "週次投稿",
-    abTesting: "広告AB",
+    weekly: "投稿頻度",
     dashboard: "ダッシュボード",
-    shooting: "撮影",
-    massProduction: "量産",
-    aiBot: "AI Bot",
-    school: "スクール構築"
+    shooting: "撮影"
   };
 
   const containerVariants = {
@@ -121,7 +106,7 @@ const Pricing = () => {
           <table className="w-full border-collapse rounded-xl overflow-hidden shadow-2xl">
             <thead>
               <tr className="bg-gradient-to-r from-blue-950 via-blue-950 to-blue-950 border-b border-gray-700">
-                <th className="py-6 px-6 text-left text-lg font-bold text-gray-300">機能</th>
+                <th className="py-6 px-6 text-left text-lg font-bold text-gray-300">項目</th>
                 {pricingData.map((plan, index) => (
                   <th key={index} className="py-6 px-6 text-center text-lg font-bold text-gray-300">
                     {plan.name}
@@ -129,10 +114,10 @@ const Pricing = () => {
                 ))}
               </tr>
               <tr className="bg-blue-950/5 border-b border-gray-800">
-                <th className="py-4 px-6 text-left font-medium text-gray-400">月額料金</th>
+                <th className="py-4 px-6 text-left font-medium text-gray-400">料金</th>
                 {pricingData.map((plan, index) => (
                   <td key={index} className="py-4 px-6 text-center font-bold text-white">
-                    ¥{plan.price}<span className="text-sm font-normal text-gray-400">〜/月</span>
+                    ¥{plan.price}<span className="text-sm font-normal text-gray-400">〜/本</span>
                   </td>
                 ))}
               </tr>
@@ -158,6 +143,22 @@ const Pricing = () => {
             </tbody>
           </table>
         </motion.div>
+        
+        {/* 見積もりシミュレーターボタン */}
+        <div className="text-center mt-12">
+          <Link
+            href="/estimate"
+            className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-bold text-lg rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+          >
+            見積もりシミュレーター
+            <svg className="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </Link>
+          <p className="text-gray-400 text-sm mt-4">
+            あなたの要件に合わせた詳細な見積もりをシミュレーション
+          </p>
+        </div>
       </div>
     </section>
   );

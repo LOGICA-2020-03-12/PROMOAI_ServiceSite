@@ -14,10 +14,11 @@ const Footer = () => {
         </div>
         <div className="border-t border-gray-800 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-gray-500 text-sm mb-4 md:mb-0">
-              &copy; 2025 PROMO AI. All rights reserved.
-            </p>
-            <div className="flex space-x-6">
+            <div className="flex items-center space-x-4 mb-4 md:mb-0">
+              <p className="text-gray-500 text-sm">
+                &copy; 2025 PROMO AI. All rights reserved.
+              </p>
+              <span className="text-gray-500 text-sm">|</span>
               <Link
                 href="https://logicajapan.co.jp/company/"
                 target="_blank"
