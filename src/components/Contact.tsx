@@ -58,7 +58,7 @@ const Contact = () => {
         setSubmitSuccess(true);
         setIsSubmitting(false);
       }, 1500);
-    } catch (error) {
+    } catch {
       setSubmitError("送信中にエラーが発生しました。後ほど再度お試しください。");
       setIsSubmitting(false);
     }

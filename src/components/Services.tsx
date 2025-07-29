@@ -180,7 +180,7 @@ const Services = () => {
           animate={inView ? "visible" : "hidden"}
           className="grid grid-cols-1 md:grid-cols-2 gap-8"
         >
-          {services.map((service, index) => (
+          {services.map((service, _index) => (
             <motion.div
               key={service.id}
               variants={itemVariants}

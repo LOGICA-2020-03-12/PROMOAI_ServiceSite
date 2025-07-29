@@ -1,7 +1,6 @@
 "use client";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import Image from "next/image";
 import { FiDownload, FiCheck } from "react-icons/fi";
 
 const Download = () => {
@@ -63,7 +62,7 @@ const Download = () => {
         setSubmitSuccess(true);
         setIsSubmitting(false);
       }, 1500);
-    } catch (error) {
+    } catch {
       setSubmitError("送信中にエラーが発生しました。後ほど再度お試しください。");
       setIsSubmitting(false);
     }

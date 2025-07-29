@@ -234,18 +234,7 @@ const About = () => {
     },
   };
 
-  // 装飾的な背景要素のアニメーション
-  const decorVariants: Variants = {
-    hidden: { opacity: 0, scale: 0.8 },
-    visible: {
-      opacity: 0.7,
-      scale: 1,
-      transition: {
-        duration: 1.5,
-        ease: "easeOut",
-      },
-    },
-  };
+
 
   const containerVariants = {
     hidden: { opacity: 0 },
