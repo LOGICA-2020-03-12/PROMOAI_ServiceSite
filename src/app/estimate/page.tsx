@@ -149,6 +149,13 @@ const EstimateSimulator = () => {
       multiplier *= 1.25;
     }
 
+    // 納品形式
+    if (estimateData.delivery === "編集データ（Premiere / AEなど）") {
+      multiplier *= 1.25;
+    } else if (estimateData.delivery === "両方欲しい（+α）") {
+      multiplier *= 1.25;
+    }
+
     const totalPrice = Math.round(basePrice * multiplier + additionalCosts);
     const monthlyPrice = estimateData.quantity.includes("月") ? 
       Math.round(totalPrice * (estimateData.quantity.includes("5〜10") ? 7 : 10)) : totalPrice;
