@@ -218,17 +218,6 @@ const Cases = () => {
             </motion.div>
           ))}
         </motion.div>
-
-        <div className="flex justify-center mt-16">
-          <Link 
-            href="/works" 
-            className="border border-white/30 hover:border-white text-white px-8 py-3 rounded-full transition-colors duration-300"
-            onMouseEnter={enterHover}
-            onMouseLeave={leaveHover}
-          >
-            もっと見る
-          </Link>
-        </div>
       </div>
 
       {/* カスタムカーソル */}

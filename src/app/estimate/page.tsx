@@ -35,23 +35,50 @@ const EstimateSimulator = () => {
     {
       id: "genre",
       question: "制作ジャンルは？",
-      options: ["SNS動画", "ネット広告", "マニュアル・研修・対談動画", "画像制作"],
+      options: ["SNS動画（ショートorロング）", "動画広告（縦型 / 横型どちらも可）", "マニュアル・研修・対談動画", "画像制作（バナー / ポスター・フライヤー / ロゴ）"],
     },
     {
       id: "quantity",
       question: "納品本数は？",
       options: (data: EstimateData) => {
-        if (data.genre === "SNS動画") {
-          return ["月5〜10本（週1以上ペース）", "月10本以上（本格運用）"];
+        if (data.genre === "SNS動画（ショートorロング）") {
+          return [
+            "ショート 月5〜10本（週1以上ペース）",
+            "ショート 月10本以上（本格運用）",
+            "ロング 月5〜10本（週1以上ペース）",
+            "ロング 月10本以上（本格運用）"
+          ];
+        } else if (data.genre === "動画広告（縦型 / 横型どちらも可）") {
+          return ["1本", "5本", "10本以上"];
+        } else if (data.genre === "マニュアル・研修・対談動画") {
+          return ["1本", "5本", "10本以上"];
+        } else if (data.genre === "画像制作（バナー / ポスター・フライヤー / ロゴ）") {
+          return ["1本", "5本", "10本"];
         }
-        return ["1本（単発で試したい）", "月5〜10本（週1以上ペース）", "月10本以上（本格運用）"];
+        return [];
       },
     },
     {
       id: "duration",
       question: "納品尺・形式は？",
-      options: ["〜6秒（超短尺）", "15〜30秒", "60秒〜"],
-      conditional: (data: EstimateData) => data.genre === "SNS動画" || data.genre === "ネット広告",
+      options: (data: EstimateData) => {
+        if (data.genre === "SNS動画（ショートorロング）") {
+          // ショートかロングかを判定
+          const isShort = data.quantity.includes("ショート");
+          if (isShort) {
+            return ["1分以内"];
+          } else {
+            return ["15分以内", "30分", "60分"];
+          }
+        } else if (data.genre === "動画広告（縦型 / 横型どちらも可）") {
+          return ["6秒", "15秒", "30秒", "60秒"];
+        } else if (data.genre === "マニュアル・研修・対談動画") {
+          return ["15分以内", "30分", "60分"];
+        } else if (data.genre === "画像制作（バナー / ポスター・フライヤー / ロゴ）") {
+          return ["画像生成のみ", "画像生成＋デザイン(Photoshop)", "画像生成＋デザイン(Photoshop)＋編集データ"];
+        }
+        return [];
+      },
     },
     {
       id: "shooting",
@@ -71,12 +98,22 @@ const EstimateSimulator = () => {
     {
       id: "graphics",
       question: "テロップ・図解・チャプターなどは必要？",
-      options: ["フル対応希望（研修・対談など）", "軽い字幕だけあればOK", "なしでいい"],
+      options: (data: EstimateData) => {
+        if (data.genre === "画像制作（バナー / ポスター・フライヤー / ロゴ）") {
+          return ["画像制作には含まれないので次に進んでください"];
+        }
+        return ["フル対応希望", "軽い字幕だけあればOK", "なしでいい"];
+      },
     },
     {
       id: "camera",
       question: "複数カメ構成やCG演出は希望する？",
-      options: ["はい（2カメ構成 or CG演出あり）", "一部検討中（オプションで見積もり）", "いいえ（1カメ固定）"],
+      options: (data: EstimateData) => {
+        if (data.genre === "画像制作（バナー / ポスター・フライヤー / ロゴ）") {
+          return ["画像制作には含まれないので次に進んでください"];
+        }
+        return ["はい（2カメ構成 or CG演出あり）", "一部検討中（オプションで見積もり）", "いいえ（1カメ固定）"];
+      },
     },
     {
       id: "schedule",
@@ -86,7 +123,12 @@ const EstimateSimulator = () => {
     {
       id: "delivery",
       question: "納品形式の希望は？",
-      options: ["完パケ（完成動画納品）", "編集データ（Premiere / AEなど）", "両方欲しい（+α）"],
+      options: (data: EstimateData) => {
+        if (data.genre === "画像制作（バナー / ポスター・フライヤー / ロゴ）") {
+          return ["完パケ（jpeg / pngデータ納品）", "編集データ（PSDファイルなど）", "両方欲しい（+α）"];
+        }
+        return ["完パケ（完成動画納品）", "編集データ（Premiere / AEなど）", "両方欲しい（+α）"];
+      },
     },
   ];
 
@@ -111,53 +153,106 @@ const EstimateSimulator = () => {
   };
 
   const calculateEstimate = () => {
-    // 見積もり計算ロジック
-    let basePrice = 0;
-    let multiplier = 1;
-    let additionalCosts = 0;
-
-    // ジャンル別基本価格
-    switch (estimateData.genre) {
-      case "SNS動画":
-        basePrice = 30000;
-        break;
-      case "ネット広告":
-        basePrice = 200000;
-        break;
-      case "マニュアル・研修・対談動画":
-        basePrice = 150000;
-        break;
-      case "画像制作":
-        basePrice = 5000;
-        break;
-    }
-
-    // 企画費用
+    // 基本価格を取得
+    const basePrice = getBasePrice();
+    
+    // 本数を取得
+    const quantity = getQuantity();
+    
+    // 乗数を計算
+    let multiplier = 1.0;
     if (estimateData.planning === "はい（フル企画込み）") {
       multiplier *= 1.3;
     }
-
-    // 修正回数
-    if (estimateData.revisions === "2回以上したい") {
-      additionalCosts += basePrice * 0.2;
-    } else if (estimateData.revisions === "修正無制限希望（要相談）") {
-      additionalCosts += basePrice * 0.5;
-    }
-
-    // スケジュール
     if (estimateData.schedule === "急ぎ対応（1週間以内）") {
       multiplier *= 1.25;
     }
-
-    const totalPrice = Math.round(basePrice * multiplier + additionalCosts);
-    const monthlyPrice = estimateData.quantity.includes("月") ? 
-      Math.round(totalPrice * (estimateData.quantity.includes("5〜10") ? 7 : 10)) : totalPrice;
-
+    if (estimateData.delivery === "編集データ（Premiere / AEなど）" || 
+        estimateData.delivery === "編集データ（PSDファイルなど）") {
+      multiplier *= 1.25;
+    }
+    if (estimateData.delivery === "両方欲しい（+α）") {
+      multiplier *= 1.25;
+    }
+    
+    // 追加コストを計算
+    let additionalCosts = 0;
+    if (estimateData.revisions === "2回以上したい") {
+      additionalCosts += (basePrice * quantity) * 0.2;
+    } else if (estimateData.revisions === "修正無制限希望（要相談）") {
+      additionalCosts += (basePrice * quantity) * 0.5;
+    }
+    
+    // SNS動画の場合は特別な計算
+    let totalPrice, monthlyPrice;
+    if (estimateData.genre === "SNS動画（ショートorロング）") {
+      // 単発単価は1本分の価格
+      totalPrice = Math.round(basePrice * multiplier + (basePrice * 0.2 * (estimateData.revisions === "2回以上したい" ? 1 : 0)) + (basePrice * 0.5 * (estimateData.revisions === "修正無制限希望（要相談）" ? 1 : 0)));
+      
+      // 月額目安は本数分の価格
+      if (estimateData.quantity.includes("月")) {
+        const monthlyQuantity = estimateData.quantity.includes("5〜10") ? 5 : 10;
+        monthlyPrice = Math.round(basePrice * monthlyQuantity * multiplier + (basePrice * monthlyQuantity * 0.2 * (estimateData.revisions === "2回以上したい" ? 1 : 0)) + (basePrice * monthlyQuantity * 0.5 * (estimateData.revisions === "修正無制限希望（要相談）" ? 1 : 0)));
+      } else {
+        monthlyPrice = null;
+      }
+    } else {
+      // その他のジャンルは通常の計算
+      totalPrice = Math.round((basePrice * quantity) * multiplier + additionalCosts);
+      monthlyPrice = null;
+    }
+    
     setEstimateResult({
       basePrice: totalPrice,
       monthlyPrice,
       details: estimateData
     });
+  };
+
+  // 基本価格を取得する関数
+  const getBasePrice = (): number => {
+    const { genre, duration } = estimateData;
+    
+    if (genre === "SNS動画（ショートorロング）") {
+      if (duration === "1分以内") {
+        return 30000; // ショート固定
+      } else if (duration === "15分以内") {
+        return 150000;
+      } else if (duration === "30分") {
+        return 250000;
+      } else if (duration === "60分") {
+        return 350000;
+      }
+    } else if (genre === "動画広告（縦型 / 横型どちらも可）") {
+      if (duration === "6秒") return 200000;
+      if (duration === "15秒") return 350000;
+      if (duration === "30秒") return 450000;
+      if (duration === "60秒") return 650000;
+    } else if (genre === "マニュアル・研修・対談動画") {
+      if (duration === "15分以内") return 300000;
+      if (duration === "30分") return 400000;
+      if (duration === "60分") return 500000;
+    } else if (genre === "画像制作（バナー / ポスター・フライヤー / ロゴ）") {
+      if (duration === "画像生成のみ") return 5000;
+      if (duration === "画像生成＋デザイン(Photoshop)") return 7500;
+      if (duration === "画像生成＋デザイン(Photoshop)＋編集データ") return 10000;
+    }
+    
+    return 0;
+  };
+
+  // 本数を取得する関数
+  const getQuantity = (): number => {
+    const { quantity } = estimateData;
+    
+    if (quantity.includes("1本")) return 1;
+    if (quantity.includes("5本")) return 5;
+    if (quantity.includes("10本")) return 10;
+    if (quantity.includes("10本以上")) return 10;
+    if (quantity.includes("月5〜10本")) return 5;
+    if (quantity.includes("月10本以上")) return 10;
+    
+    return 1;
   };
 
   const [estimateResult, setEstimateResult] = useState<any>(null);
@@ -208,9 +303,21 @@ const EstimateSimulator = () => {
                 transition={{ duration: 0.3 }}
                 className="bg-zinc-800 rounded-2xl p-8 shadow-xl"
               >
-                <h2 className="text-2xl font-bold text-white mb-8">
-                  {currentQuestion.question}
-                </h2>
+                <div className="flex items-center justify-between mb-8">
+                  <h2 className="text-2xl font-bold text-white">
+                    {currentQuestion.question}
+                  </h2>
+                  {/* 1つ前の質問に戻るボタン（質問2以降のみ表示） */}
+                  {currentStep > 0 && (
+                    <button
+                      type="button"
+                      onClick={() => setCurrentStep(currentStep - 1)}
+                      className="text-gray-400 hover:text-white transition-colors"
+                    >
+                      1つ前の質問に戻る
+                    </button>
+                  )}
+                </div>
                 
                 <div className="space-y-4">
                   {getOptions(currentQuestion, estimateData).map((option, index) => (
@@ -244,12 +351,13 @@ const EstimateSimulator = () => {
                 <div className="bg-gradient-to-r from-amber-500/10 to-amber-600/10 border border-amber-500/20 rounded-xl p-6 mb-8">
                   <div className="text-center">
                     <p className="text-2xl font-bold text-amber-500 mb-2">
-                      ¥{estimateResult.basePrice.toLocaleString()}〜
+                      ¥{estimateResult.basePrice.toLocaleString()}{estimateData.genre === "SNS動画（ショートorロング）" ? "〜 / 本" : getQuantity() > 1 || estimateData.quantity.includes("月") ? "〜" : ""}
                     </p>
                     <p className="text-gray-400">
-                      {estimateData.quantity.includes("月") ? 
+                      {estimateResult.monthlyPrice ? 
                         `月額目安: ¥${estimateResult.monthlyPrice.toLocaleString()}〜` : 
-                        "1本あたり"
+                        estimateData.genre === "SNS動画（ショートorロング）" ? "単発単価" :
+                        getQuantity() > 1 ? `${getQuantity()}本分` : "1本あたり"
                       }
                     </p>
                   </div>
@@ -267,7 +375,7 @@ const EstimateSimulator = () => {
 
                 <div className="text-center space-y-4">
                   <Link
-                    href="/contact"
+                    href={`/contact?estimateData=${encodeURIComponent(JSON.stringify(estimateData))}`}
                     className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-bold text-lg rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
                   >
                     詳細条件を詰めて正式お見積もりへ

@@ -73,10 +73,10 @@ const Services = () => {
       imageUrl: "/images/SNS運用.jpg",
     },
     {
-      id: "ad-banner",
-      title: "Web／SNS用の広告バナー制作",
-      description: "クリック率を高めるWeb広告バナーやSNS投稿用バナーを制作。AI技術を活用したA/Bテストで最適なデザインを導き出します。",
-      imageUrl: "/images/バナー制作.jpg",
+      id: "manual-video",
+      title: "マニュアル動画制作(法人向け)",
+      description: "書面やデータのマニュアルをベースに、アニメーションやCGを活用した動画マニュアルを制作。チームの認識齟齬を解消し、業務効率化と教育効果を実現します。",
+      imageUrl: "/images/マニュアル動画制作.jpg",
     },
     {
       id: "ai-consult",
@@ -178,9 +178,9 @@ const Services = () => {
           variants={containerVariants}
           initial="hidden"
           animate={inView ? "visible" : "hidden"}
-          className="grid grid-cols-1 md:grid-cols-2 gap-8"
+          className="grid grid-cols-1 md:grid-cols-2 gap-6"
         >
-          {services.map((service, index) => (
+          {services.map((service, _index) => (
             <motion.div
               key={service.id}
               variants={itemVariants}
@@ -189,7 +189,7 @@ const Services = () => {
               onMouseLeave={leaveHover}
             >
               {/* サムネイル画像エリア */}
-              <div className="w-full aspect-video relative bg-gray-800 overflow-hidden group">
+              <div className="w-full aspect-[2/1] relative bg-gray-800 overflow-hidden group">
                 <Image
                   src={service.imageUrl}
                   alt={service.title}
@@ -202,9 +202,9 @@ const Services = () => {
               </div>
               
               {/* コンテンツエリア */}
-              <div className="p-6">
-                <h3 className="text-xl font-bold mb-3 text-white">{service.title}</h3>
-                <p className="text-gray-300 mb-6 text-sm">{service.description}</p>
+              <div className="p-2">
+                <h3 className="text-lg font-bold mb-2 text-white">{service.title}</h3>
+                <p className="text-gray-300 mb-2 text-xs leading-tight">{service.description}</p>
                 
                 {/* 詳細ページへのボタン */}
                 <Link 

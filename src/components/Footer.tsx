@@ -27,6 +27,13 @@ const Footer = () => {
               >
                 運用会社
               </Link>
+              <span className="text-gray-500 text-sm">|</span>
+              <Link
+                href="/privacy"
+                className="text-gray-400 hover:text-white text-sm transition-colors"
+              >
+                プライバシーポリシー
+              </Link>
             </div>
           </div>
         </div>

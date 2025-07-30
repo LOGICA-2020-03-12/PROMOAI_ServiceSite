@@ -2,7 +2,31 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 
-const Contact = () => {
+interface ContactProps {
+  estimateData?: any;
+}
+
+// 見積もりデータをフォーマットする関数
+const formatEstimateData = (data: any): string => {
+  const questions = [
+    { id: "genre", label: "制作ジャンル" },
+    { id: "quantity", label: "納品本数" },
+    { id: "duration", label: "納品尺・形式" },
+    { id: "shooting", label: "撮影" },
+    { id: "planning", label: "演出・企画・構成" },
+    { id: "revisions", label: "修正回数" },
+    { id: "graphics", label: "テロップ・図解・チャプター" },
+    { id: "camera", label: "複数カメ構成やCG演出" },
+    { id: "schedule", label: "制作スケジュール" },
+    { id: "delivery", label: "納品形式" },
+  ];
+
+  return questions
+    .map(q => `${q.label}: ${data[q.id] || "未選択"}`)
+    .join("\n");
+};
+
+const Contact = ({ estimateData }: ContactProps) => {
   const [formData, setFormData] = useState({
     company: "",
     name: "",
@@ -19,6 +43,7 @@ const Contact = () => {
     startDate: "",
     message: "",
     referenceUrl: "",
+    selectedConditions: estimateData ? formatEstimateData(estimateData) : "",
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -58,7 +83,7 @@ const Contact = () => {
         setSubmitSuccess(true);
         setIsSubmitting(false);
       }, 1500);
-    } catch (error) {
+    } catch {
       setSubmitError("送信中にエラーが発生しました。後ほど再度お試しください。");
       setIsSubmitting(false);
     }
@@ -231,6 +256,23 @@ const Contact = () => {
                   required
                 />
               </div>
+
+              {estimateData && (
+                <div>
+                  <label htmlFor="selectedConditions" className="block mb-2 text-sm font-medium">
+                    選択した条件
+                  </label>
+                  <textarea
+                    id="selectedConditions"
+                    name="selectedConditions"
+                    value={formData.selectedConditions}
+                    readOnly
+                    rows={6}
+                    className="w-full p-3 bg-gray-800 border border-gray-600 rounded-md text-gray-300 cursor-not-allowed"
+                  ></textarea>
+                  <p className="text-xs text-gray-500 mt-1">※ 見積もりシミュレーターで選択された条件です（編集不可）</p>
+                </div>
+              )}
 
               <div>
                 <label htmlFor="message" className="block mb-2 text-sm font-medium">
