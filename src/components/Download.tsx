@@ -9,11 +9,6 @@ const Download = () => {
     company: "",
     name: "",
     email: "",
-    selectedMaterials: {
-      video: false,
-      sns: false,
-      dx: false,
-    },
     message: "",
   });
 
@@ -29,27 +24,8 @@ const Download = () => {
     }));
   };
 
-  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, checked } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      selectedMaterials: {
-        ...prev.selectedMaterials,
-        [name]: checked,
-      },
-    }));
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // 少なくとも1つの資料が選択されているか確認
-    if (!formData.selectedMaterials.video && 
-        !formData.selectedMaterials.sns && 
-        !formData.selectedMaterials.dx) {
-      setSubmitError("少なくとも1つの資料を選択してください。");
-      return;
-    }
     
     setIsSubmitting(true);
     setSubmitError("");
@@ -69,94 +45,49 @@ const Download = () => {
     }
   };
 
-  const materials = [
-    {
-      id: "video",
-      title: "動画制作サービス紹介資料",
-      description: "本資料では、サービスの概要に加えて、対応可能な動画ジャンル、制作の流れ、費用の目安、そしてこれまでの制作事例まで幅広くご紹介しています。国内外での映像制作を検討されている方や、「コストを抑えつつ高品質な動画を作りたい」という方にとって、有益な情報を掲載しています。",
-      image: "/images/video-material.jpg",
-    },
-    {
-      id: "sns",
-      title: "SNS運用サービス紹介資料",
-      description: "本資料では、SNS運用代行の具体的なサービス内容や対応可能なプラットフォーム、運用の流れ、費用感の目安、成果事例などをご紹介しています。「SNSを始めたけれど、どう活用していいかわからない」「SNS運用まで手が回らない」といった課題をお持ちの方にぴったりの内容となっています。",
-      image: "/images/sns-material.jpg",
-    },
-    {
-      id: "dx",
-      title: "DXコンサルサービス紹介資料",
-      description: "本資料では、企業のデジタルトランスフォーメーション(DX)を支援するコンサルティングサービスの概要、アプローチ方法、導入事例などを詳しく解説しています。デジタル化による業務効率化や新たなビジネスモデルの創出を検討されている企業様に役立つ情報を提供しています。",
-      image: "/images/dx-material.jpg",
-    },
-  ];
-
   return (
     <section id="download" className="section-padding bg-dark">
       <div className="container-custom">
         <div className="text-center mb-16">
           <h2 className="heading-lg mb-4">無料資料ダウンロード</h2>
           <p className="text-gray-300 max-w-3xl mx-auto">
-            ご興味のある資料を選択し、フォームにご記入いただくと、すぐにメールでお送りいたします。
+            フォームにご記入いただくと、資料ダウンロード用のQRコードを発行いたします。
+            <br />
             お気軽にご利用ください。
           </p>
         </div>
 
-        <div className="max-w-6xl mx-auto mb-16">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {materials.map((material) => (
-              <motion.div
-                key={material.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-                className="bg-gray-900 rounded-xl overflow-hidden border border-gray-800 shadow-xl"
-              >
-                <div className="relative h-48 w-full overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-tr from-primary to-secondary opacity-70"></div>
-                  {/* 実際の画像が用意できたら差し替え */}
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="text-white text-xl font-bold">{material.title}</span>
-                  </div>
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-bold mb-3">{material.title}</h3>
-                  <p className="text-gray-400 text-sm mb-4 line-clamp-4">
-                    {material.description}
-                  </p>
-                  <label className="flex items-center space-x-3 cursor-pointer group">
-                    <div className={`w-6 h-6 rounded border flex items-center justify-center transition-colors duration-200 ${
-                      formData.selectedMaterials[material.id as keyof typeof formData.selectedMaterials]
-                        ? "bg-secondary border-secondary"
-                        : "border-gray-600 group-hover:border-secondary"
-                    }`}>
-                      {formData.selectedMaterials[material.id as keyof typeof formData.selectedMaterials] && (
-                        <FiCheck className="text-primary" />
-                      )}
-                    </div>
-                    <input
-                      type="checkbox"
-                      name={material.id}
-                      checked={formData.selectedMaterials[material.id as keyof typeof formData.selectedMaterials]}
-                      onChange={handleCheckboxChange}
-                      className="sr-only"
-                    />
-                    <span className="text-white group-hover:text-secondary transition-colors duration-200">
-                      この資料を選択する
-                    </span>
-                  </label>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+        <div className="max-w-3xl mx-auto mb-16">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="bg-gray-900 rounded-xl overflow-hidden border border-gray-800 shadow-xl"
+          >
+            <div className="relative h-48 w-full overflow-hidden">
+              <Image
+                src="/images/スライド表紙.jpg"
+                alt="PROMO AI サービス紹介資料"
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div className="p-6">
+              <h3 className="text-xl font-bold mb-3">PROMO AI サービス紹介資料</h3>
+              <p className="text-gray-400 text-sm mb-4">
+                本資料では、PROMO AIのサービス概要、対応可能な動画ジャンル、制作の流れ、費用の目安、そしてこれまでの制作事例まで幅広くご紹介しています。動画制作やSNS運用を検討されている方にとって、有益な情報を掲載しています。
+              </p>
+            </div>
+          </motion.div>
         </div>
 
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-3xl mx-auto">
           {submitSuccess ? (
-                          <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="bg-green-800 bg-opacity-20 border border-green-600 rounded-lg p-6 text-center max-w-3xl mx-auto"
-              >
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="bg-green-800 bg-opacity-20 border border-green-600 rounded-lg p-6 text-center max-w-3xl mx-auto"
+            >
               <h3 className="text-xl font-bold mb-2">資料ダウンロードのご依頼ありがとうございます</h3>
               <p className="text-gray-300 mb-4">
                 ご入力いただいたメールアドレス宛に資料をお送りしました。

@@ -217,6 +217,11 @@ const LoadingScreen = () => {
               
               {/* 洗練されたプログレスバー */}
               <div className="relative w-96 mb-4">
+                {/* ゲージのラベル - 上中央に配置 */}
+                <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 text-white/70 text-xs font-medium tracking-widest">
+                  LOADING
+                </div>
+                
                 {/* ゲージの外枠 */}
                 <div className="relative h-4 bg-black/30 border border-white/40 rounded-full overflow-hidden backdrop-blur-sm">
                   {/* ゲージの背景 */}
@@ -240,30 +245,23 @@ const LoadingScreen = () => {
                   
                   {/* ゲージの境界線エフェクト */}
                   <div className="absolute inset-0 border border-white/20 rounded-full pointer-events-none"></div>
+                  
+                  {/* 洗練された光の点 */}
+                  <motion.div 
+                    className="absolute top-1/2 h-1 w-1 bg-white rounded-full -translate-y-1/2 shadow-sm shadow-white/30"
+                    animate={{ 
+                      x: ['0%', '100%'],
+                      opacity: [0, 1, 0],
+                      scale: [0.3, 1, 0.3]
+                    }}
+                    transition={{ 
+                      duration: 2,
+                      ease: "easeInOut",
+                      times: [0, 0.5, 1]
+                    }}
+                  />
                 </div>
-                
-                {/* ゲージのラベル */}
-                <div className="absolute -top-6 left-0 text-white/70 text-xs font-medium tracking-widest">
-                  LOADING
-                </div>
-                
-                {/* 洗練された光の点 */}
-                <motion.div 
-                  className="absolute top-1/2 h-1 w-1 bg-white rounded-full -translate-y-1/2 shadow-sm shadow-white/30"
-                  animate={{ 
-                    x: ['0%', '100%'],
-                    opacity: [0, 1, 0],
-                    scale: [0.3, 1, 0.3]
-                  }}
-                  transition={{ 
-                    duration: 2,
-                    ease: "easeInOut",
-                    times: [0, 0.5, 1]
-                  }}
-                />
               </div>
-              
-
             </div>
           </div>
         </motion.div>
