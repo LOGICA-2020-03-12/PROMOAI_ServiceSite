@@ -2,12 +2,25 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 
+interface EstimateData {
+  genre: string;
+  quantity: string;
+  duration: string;
+  shooting: string;
+  planning: string;
+  revisions: string;
+  graphics: string;
+  camera: string;
+  schedule: string;
+  delivery: string;
+}
+
 interface ContactProps {
-  estimateData?: any;
+  estimateData?: EstimateData;
 }
 
 // 見積もりデータをフォーマットする関数
-const formatEstimateData = (data: any): string => {
+const formatEstimateData = (data: EstimateData): string => {
   const questions = [
     { id: "genre", label: "制作ジャンル" },
     { id: "quantity", label: "納品本数" },
@@ -22,7 +35,7 @@ const formatEstimateData = (data: any): string => {
   ];
 
   return questions
-    .map(q => `${q.label}: ${data[q.id] || "未選択"}`)
+    .map(q => `${q.label}: ${data[q.id as keyof EstimateData] || "未選択"}`)
     .join("\n");
 };
 

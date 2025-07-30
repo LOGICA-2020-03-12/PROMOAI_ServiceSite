@@ -16,6 +16,12 @@ interface EstimateData {
   delivery: string;
 }
 
+interface Question {
+  id: keyof EstimateData;
+  question: string;
+  options: string[] | ((data: EstimateData) => string[]);
+}
+
 const EstimateSimulator = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [estimateData, setEstimateData] = useState<EstimateData>({
@@ -31,7 +37,7 @@ const EstimateSimulator = () => {
     delivery: "",
   });
 
-  const questions = [
+  const questions: Question[] = [
     {
       id: "genre",
       question: "制作ジャンルは？",
@@ -133,7 +139,7 @@ const EstimateSimulator = () => {
   ];
 
   // オプションを取得する関数
-  const getOptions = (question: any, data: EstimateData): string[] => {
+  const getOptions = (question: Question, data: EstimateData): string[] => {
     if (typeof question.options === 'function') {
       return question.options(data);
     }
@@ -255,7 +261,11 @@ const EstimateSimulator = () => {
     return 1;
   };
 
-  const [estimateResult, setEstimateResult] = useState<any>(null);
+  const [estimateResult, setEstimateResult] = useState<{
+    basePrice: number;
+    monthlyPrice: number | null;
+    details: EstimateData;
+  } | null>(null);
 
   const currentQuestion = questions[currentStep];
 
