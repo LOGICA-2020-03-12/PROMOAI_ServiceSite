@@ -63,36 +63,42 @@ const Cases = () => {
       id: 1,
       title: "博多むぎ焼酎 プロモーション広告",
       image: "/images/焼酎サムネ.jpg",
+      youtubeId: "YOUR_YOUTUBE_ID_1", // YouTube動画IDを設定してください
       url: "#",
     },
     {
       id: 2,
       title: "たこ焼き店舗プロモーション SNS広告",
       image: "/images/たこ焼きサムネ.jpg",
+      youtubeId: "YOUR_YOUTUBE_ID_2", // YouTube動画IDを設定してください
       url: "#",
     },
     {
       id: 3,
       title: "観光プロモーション SNS広告",
       image: "/images/観光CMサムネ.jpg",
+      youtubeId: "YOUR_YOUTUBE_ID_3", // YouTube動画IDを設定してください
       url: "#",
     },
     {
       id: 4,
       title: "ハイブランド SNS広告",
       image: "/images/ハイブランドサムネ.jpg",
+      youtubeId: "YOUR_YOUTUBE_ID_4", // YouTube動画IDを設定してください
       url: "#",
     },
     {
       id: 5,
       title: "ラーメン店舗プロモーション SNS広告",
       image: "/images/ラーメン屋サムネ.jpg",
+      youtubeId: "YOUR_YOUTUBE_ID_5", // YouTube動画IDを設定してください
       url: "#",
     },
     {
       id: 6,
       title: "老眼鏡 SNS広告",
       image: "/images/メガネ広告サムネ.jpg",
+      youtubeId: "YOUR_YOUTUBE_ID_6", // YouTube動画IDを設定してください
       url: "#",
     },
   ];
@@ -200,12 +206,23 @@ const Cases = () => {
             >
               <Link href={caseItem.url} className="block">
                 <div className="relative overflow-hidden aspect-video mb-4 bg-gray-800 border border-gray-700 rounded-lg group-hover:scale-105 transition-transform duration-300">
-                  <Image
-                    src={caseItem.image}
-                    alt={caseItem.title}
-                    fill
-                    className="object-cover"
-                  />
+                  {caseItem.youtubeId ? (
+                    <iframe
+                      src={`https://www.youtube.com/embed/${caseItem.youtubeId}?rel=0&modestbranding=1&showinfo=0`}
+                      title={caseItem.title}
+                      className="w-full h-full object-cover"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                  ) : (
+                    <Image
+                      src={caseItem.image}
+                      alt={caseItem.title}
+                      fill
+                      className="object-cover"
+                    />
+                  )}
                   {/* ホバー時のオーバーレイ */}
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
                     <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-white text-sm font-medium">
