@@ -61,13 +61,13 @@ const Services = () => {
   // サービス一覧
   const services = [
     {
-      id: "promo-video",
+      id: "Service_promotion-video",
       title: "広告用のプロモーション動画制作",
       description: "商品やサービスの魅力を最大限に引き出すプロモーション動画を制作します。AI技術を活用した効率的な映像制作で、短納期・高品質を実現します。",
       imageUrl: "/images/広告プロモーション2.jpg",
     },
     {
-      id: "sns-operation",
+      id: "sns-marketing",
       title: "SNS運用／各種動画制作",
       description: "SNSアカウントの運用代行から、投稿用の動画コンテンツ制作まで一貫してサポート。エンゲージメント向上につながるコンテンツ戦略を提案します。",
       imageUrl: "/images/SNS運用.jpg",
@@ -79,7 +79,7 @@ const Services = () => {
       imageUrl: "/images/マニュアル動画制作.jpg",
     },
     {
-      id: "ai-consult",
+      id: "dx-ai-consulting",
       title: "DX推進／AIコンサル派遣",
       description: "企業のDX推進をサポートするAI専門コンサルタントを派遣。業務効率化から新規事業創出まで、AI技術の活用方法を提案します。",
       imageUrl: "/images/DX推進.jpg",
@@ -189,30 +189,28 @@ const Services = () => {
               onMouseLeave={leaveHover}
             >
               {/* サムネイル画像エリア */}
-              <div className="w-full aspect-[2/1] relative bg-gray-800 overflow-hidden group">
+              <div className="w-full aspect-[2/1] relative bg-gray-800 overflow-hidden">
                 <Image
                   src={service.imageUrl}
                   alt={service.title}
                   fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-300"
+                  className="object-cover"
                   sizes="(max-width: 768px) 100vw, 50vw"
                 />
-                {/* ホバー時のオーバーレイ */}
-                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-300"></div>
               </div>
               
               {/* コンテンツエリア */}
-              <div className="p-2">
-                <h3 className="text-lg font-bold mb-2 text-white">{service.title}</h3>
-                <p className="text-gray-300 mb-2 text-xs leading-tight">{service.description}</p>
+              <div className="p-6">
+                <h3 className="text-xl font-bold mb-3 text-white">{service.title}</h3>
+                <p className="text-gray-300 mb-6 text-sm leading-relaxed">{service.description}</p>
                 
                 {/* 詳細ページへのボタン */}
                 <Link 
                   href={`/services/${service.id}`} 
-                  className="inline-flex items-center text-secondary hover:text-white transition-colors group"
+                  className="inline-flex items-center text-secondary hover:text-white transition-colors group text-lg font-semibold"
                 >
-                  <span className="mr-2">詳細を見る</span>
-                  <FiArrowRight className="transform group-hover:translate-x-1 transition-transform" />
+                  <span className="mr-3">詳細を見る</span>
+                  <FiArrowRight className="transform group-hover:translate-x-1 transition-transform text-xl" />
                 </Link>
               </div>
             </motion.div>
