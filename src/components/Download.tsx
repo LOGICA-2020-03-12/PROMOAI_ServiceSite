@@ -31,16 +31,25 @@ const Download = () => {
     setSubmitError("");
 
     try {
-      // ここで実際のフォーム送信処理を行います
-      // 例: const response = await fetch('/api/download', { method: 'POST', body: JSON.stringify(formData) });
-      
-      // 成功時の処理（デモ用）
-      setTimeout(() => {
+      // APIエンドポイントにフォームデータを送信
+      const response = await fetch('/api/download', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
+      });
+
+      if (response.ok) {
         setSubmitSuccess(true);
-        setIsSubmitting(false);
-      }, 1500);
-    } catch {
+      } else {
+        const errorData = await response.json();
+        setSubmitError(errorData.error || "送信に失敗しました。後ほど再度お試しください。");
+      }
+    } catch (error) {
+      console.error('送信エラー:', error);
       setSubmitError("送信中にエラーが発生しました。後ほど再度お試しください。");
+    } finally {
       setIsSubmitting(false);
     }
   };
