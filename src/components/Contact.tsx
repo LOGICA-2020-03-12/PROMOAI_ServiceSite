@@ -13,6 +13,8 @@ interface EstimateData {
   camera: string;
   schedule: string;
   delivery: string;
+  basePrice?: number;
+  monthlyPrice?: number | null;
 }
 
 interface ContactProps {
@@ -34,9 +36,19 @@ const formatEstimateData = (data: EstimateData): string => {
     { id: "delivery", label: "納品形式" },
   ];
 
-  return questions
+  let result = questions
     .map(q => `${q.label}: ${data[q.id as keyof EstimateData] || "未選択"}`)
     .join("\n");
+
+  // 価格情報を追加
+  if (data.basePrice) {
+    result += `\n\n💰 見積もり価格: ¥${data.basePrice.toLocaleString()}`;
+    if (data.monthlyPrice) {
+      result += `\n💰 月額目安: ¥${data.monthlyPrice.toLocaleString()}`;
+    }
+  }
+
+  return result;
 };
 
 const Contact = ({ estimateData }: ContactProps) => {
@@ -88,16 +100,25 @@ const Contact = ({ estimateData }: ContactProps) => {
     setSubmitError("");
 
     try {
-      // ここで実際のフォーム送信処理を行います
-      // 例: const response = await fetch('/api/contact', { method: 'POST', body: JSON.stringify(formData) });
-      
-      // 成功時の処理（デモ用）
-      setTimeout(() => {
+      // APIエンドポイントにフォームデータを送信
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
+      });
+
+      if (response.ok) {
         setSubmitSuccess(true);
-        setIsSubmitting(false);
-      }, 1500);
-    } catch {
+      } else {
+        const errorData = await response.json();
+        setSubmitError(errorData.error || "送信に失敗しました。後ほど再度お試しください。");
+      }
+    } catch (error) {
+      console.error('送信エラー:', error);
       setSubmitError("送信中にエラーが発生しました。後ほど再度お試しください。");
+    } finally {
       setIsSubmitting(false);
     }
   };

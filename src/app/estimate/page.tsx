@@ -385,7 +385,11 @@ const EstimateSimulator = () => {
 
                 <div className="text-center space-y-4">
                   <Link
-                    href={`/contact?estimateData=${encodeURIComponent(JSON.stringify(estimateData))}`}
+                    href={`/contact?estimateData=${encodeURIComponent(JSON.stringify({
+                      ...estimateData,
+                      basePrice: estimateResult.basePrice,
+                      monthlyPrice: estimateResult.monthlyPrice
+                    }))}`}
                     className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-bold text-lg rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
                   >
                     詳細条件を詰めて正式お見積もりへ

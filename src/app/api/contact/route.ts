@@ -1,0 +1,71 @@
+import { NextResponse } from 'next/server';
+import { google } from 'googleapis';
+import { sheetsConfig } from '@/config/sheets';
+
+// Google Sheets APIの設定
+const auth = new google.auth.GoogleAuth({
+  credentials: {
+    client_email: sheetsConfig.clientEmail,
+    private_key: sheetsConfig.privateKey.replace(/\\n/g, '\n'),
+  },
+  scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+});
+
+const sheets = google.sheets({ version: 'v4', auth });
+
+export async function POST(request: Request) {
+  try {
+    const formData = await request.json();
+    
+    // 現在の日時を取得
+    const now = new Date().toLocaleString('ja-JP');
+    
+    // 興味領域を文字列に変換
+    const interests = Object.entries(formData.interests)
+      .filter(([_, checked]) => checked)
+      .map(([key, _]) => {
+        const interestMap: { [key: string]: string } = {
+          sns: 'SNS運用',
+          ads: '広告運用',
+          video: '動画制作',
+          ai: 'AI活用',
+          analytics: '分析',
+          education: '教育'
+        };
+        return interestMap[key] || key;
+      })
+      .join(', ');
+
+    // スプレッドシートに追加するデータ（K列まで）
+    const rowData = [
+      now,                    // A: 日時
+      formData.company,       // B: 会社名
+      formData.name,          // C: 担当者名
+      formData.email,         // D: メールアドレス
+      formData.budget,        // E: 予算レンジ
+      interests,              // F: 興味領域
+      formData.startDate,     // G: 希望開始時期
+      formData.message,       // H: メッセージ
+      formData.referenceUrl,  // I: 参考URL
+      formData.selectedConditions, // J: 見積もりデータ
+      '未対応'                // K: ステータス
+    ];
+
+    // スプレッドシートにデータを追加
+    await sheets.spreadsheets.values.append({
+      spreadsheetId: sheetsConfig.spreadsheetId,
+      range: 'A:K', // A列からK列まで
+      valueInputOption: 'RAW',
+      requestBody: {
+        values: [rowData],
+      },
+    });
+
+    console.log('データがスプレッドシートに正常に追加されました');
+
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error('Error:', error);
+    return NextResponse.json({ error: '送信に失敗しました' }, { status: 500 });
+  }
+} 
