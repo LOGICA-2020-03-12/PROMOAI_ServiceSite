@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
 import LoadingScreen from "@/components/LoadingScreen";
+import GoogleTagManager from "@/components/GoogleTagManager";
+import Analytics from "@/components/Analytics";
 
 const inter = Inter({ 
   subsets: ["latin"],
@@ -26,9 +28,15 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const gtmId = process.env.NEXT_PUBLIC_GTM_ID || '';
+
   return (
     <html lang="ja" className={`scroll-smooth ${inter.variable} ${poppins.variable}`}>
+      <head>
+        <GoogleTagManager gtmId={gtmId} />
+      </head>
       <body className="antialiased">
+        <Analytics />
         <LoadingScreen />
         {children}
       </body>
