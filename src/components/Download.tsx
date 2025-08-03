@@ -59,35 +59,6 @@ const Download = () => {
       <div className="container-custom">
         <div className="text-center mb-16">
           <h2 className="heading-lg mb-4">無料資料ダウンロード</h2>
-          <p className="text-gray-300 max-w-3xl mx-auto">
-            フォームにご記入いただくと、資料ダウンロード用のQRコードを発行いたします。
-            <br />
-            お気軽にご利用ください。
-          </p>
-        </div>
-
-        <div className="max-w-3xl mx-auto mb-16">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="bg-gray-900 rounded-xl overflow-hidden border border-gray-800 shadow-xl"
-          >
-            <div className="relative h-48 w-full overflow-hidden">
-              <Image
-                src="/images/スライド表紙.jpg"
-                alt="PROMO AI サービス紹介資料"
-                fill
-                className="object-cover"
-              />
-            </div>
-            <div className="p-6">
-              <h3 className="text-xl font-bold mb-3">PROMO AI サービス紹介資料</h3>
-              <p className="text-gray-400 text-sm mb-4">
-                本資料では、PROMO AIのサービス概要、対応可能な動画ジャンル、制作の流れ、費用の目安、そしてこれまでの制作事例まで幅広くご紹介しています。動画制作やSNS運用を検討されている方にとって、有益な情報を掲載しています。
-              </p>
-            </div>
-          </motion.div>
         </div>
 
         <div className="max-w-3xl mx-auto">
@@ -95,15 +66,44 @@ const Download = () => {
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="bg-green-800 bg-opacity-20 border border-green-600 rounded-lg p-6 text-center max-w-3xl mx-auto"
+              className="bg-green-800 bg-opacity-20 border border-green-600 rounded-lg p-8 text-center max-w-3xl mx-auto"
             >
-              <h3 className="text-xl font-bold mb-2">資料ダウンロードのご依頼ありがとうございます</h3>
-              <p className="text-gray-300 mb-4">
-                ご入力いただいたメールアドレス宛に資料をお送りしました。
+              <h3 className="text-xl font-bold mb-4">資料ダウンロードのご依頼ありがとうございます</h3>
+              <p className="text-gray-300 mb-6">
+                下記のLINEから資料をお受け取りください。
               </p>
-              <p className="text-gray-400 text-sm">
-                ※メールが届かない場合は、迷惑メールフォルダをご確認いただくか、別のメールアドレスでお試しください。
-              </p>
+              
+              {/* LINE QRコード */}
+              <div className="mb-6">
+                <div className="bg-white rounded-lg p-4 inline-block mb-4">
+                  <Image
+                    src="/images/line-qr.png"
+                    alt="LINE QRコード"
+                    width={200}
+                    height={200}
+                    className="mx-auto"
+                  />
+                </div>
+                <p className="text-gray-400 text-sm mb-4">
+                  QRコードをスキャンしてLINEで資料を受け取ってください
+                </p>
+              </div>
+              
+              {/* スマホ用リンクボタン */}
+              <div className="space-y-3">
+                <p className="text-gray-300 font-medium">スマホの方はこちらから</p>
+                <a
+                  href="https://line.me/R/ti/p/@your-line-id"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-colors duration-300"
+                >
+                  <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/>
+                  </svg>
+                  LINEで資料を受け取る
+                </a>
+              </div>
             </motion.div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-6 bg-gray-900 p-8 rounded-xl border border-gray-800 max-w-3xl mx-auto">
