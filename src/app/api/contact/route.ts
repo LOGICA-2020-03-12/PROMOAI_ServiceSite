@@ -2,6 +2,12 @@ import { NextResponse } from 'next/server';
 import { google } from 'googleapis';
 import { sheetsConfig } from '@/config/sheets';
 
+// デバッグ用：環境変数の確認
+console.log('Environment variables check:');
+console.log('Private key exists:', !!process.env.GOOGLE_SHEETS_PRIVATE_KEY);
+console.log('Client email:', process.env.GOOGLE_SHEETS_CLIENT_EMAIL);
+console.log('Spreadsheet ID:', process.env.GOOGLE_SHEETS_SPREADSHEET_ID);
+
 // Google Sheets APIの設定
 const auth = new google.auth.GoogleAuth({
   credentials: {
@@ -51,6 +57,8 @@ export async function POST(request: Request) {
       '未対応'                // K: ステータス
     ];
 
+    console.log('Attempting to append data to spreadsheet:', rowData);
+
     // スプレッドシートにデータを追加
     await sheets.spreadsheets.values.append({
       spreadsheetId: sheetsConfig.spreadsheetId,
@@ -65,7 +73,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error('Error:', error);
+    console.error('Error details:', error);
     return NextResponse.json({ error: '送信に失敗しました' }, { status: 500 });
   }
 } 

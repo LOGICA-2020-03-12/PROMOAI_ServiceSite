@@ -1,0 +1,136 @@
+# 個人アカウントから会社アカウントへの移譲手順
+
+## 概要
+現在の個人アカウント（masayasusuzuki）で管理しているプロジェクトを会社アカウントに移譲する手順
+
+## 前提条件
+- 会社アカウントが作成済み
+- 移譲権限がある
+- バックアップを取っておく
+
+## GitHub移譲手順
+
+### 1. リポジトリの移譲
+1. GitHubでリポジトリページにアクセス
+   - https://github.com/masayasusuzuki/logica_promoAI
+2. 「Settings」タブをクリック
+3. 左側メニューの「General」を選択
+4. 「Danger Zone」セクションまでスクロール
+5. 「Transfer ownership」をクリック
+6. 会社アカウントのユーザー名を入力
+7. 確認メッセージを入力
+8. 「I understand, transfer this repository」をクリック
+
+### 2. ローカルのリモートURL変更
+```bash
+# 移譲後、ローカルのリモートURLを更新
+git remote set-url origin https://github.com/会社アカウント/logica_promoAI.git
+
+# 確認
+git remote -v
+```
+
+### 3. 権限の確認
+- 会社アカウントでリポジトリにアクセスできることを確認
+- プッシュ・プルが正常に動作することを確認
+
+## Vercel移譲手順
+
+### 1. プロジェクトの移譲
+1. Vercelダッシュボードにアクセス
+   - https://vercel.com/dashboard
+2. プロジェクトを選択
+3. 「Settings」タブをクリック
+4. 「General」セクション
+5. 「Transfer Project」をクリック
+6. 会社アカウントを選択
+7. 確認して移譲
+
+### 2. 環境変数の再設定
+移譲後、以下の環境変数を再設定する必要があります：
+
+**GOOGLE_SHEETS_PRIVATE_KEY**
+- Value: JSONファイルの`private_key`の値（改行文字`\n`を含む）
+- Environment: Production, Preview, Development すべてにチェック
+
+**GOOGLE_SHEETS_CLIENT_EMAIL**
+- Value: `sheets-api@promo-ai-467903.iam.gserviceaccount.com`
+- Environment: Production, Preview, Development すべてにチェック
+
+**GOOGLE_SHEETS_SPREADSHEET_ID**
+- Value: `1o7n78rdHqcBI78UteGfjPFgTB87lTy_hgu2QBBncmz8`
+- Environment: Production, Preview, Development すべてにチェック
+
+### 3. ドメイン設定の確認
+- カスタムドメインがある場合は再設定が必要
+- SSL証明書の更新確認
+
+## 移譲後の作業
+
+### 1. 動作確認
+1. 本番URLにアクセス
+2. お問い合わせフォームでテスト送信
+3. スプレッドシートにデータが記録されるか確認
+
+### 2. チーム設定
+1. 会社アカウントでチームメンバーを招待
+2. 適切な権限を設定
+3. アクセス権限の確認
+
+### 3. ドキュメント更新
+1. README.mdの更新
+2. 開発環境のセットアップ手順
+3. デプロイ手順の更新
+
+## 注意事項
+
+### ⚠️ 重要なポイント
+- **移譲は不可逆**: 一度移譲すると元に戻せない
+- **環境変数の再設定**: Vercel移譲後は必須
+- **権限の確認**: 移譲後すぐにアクセス権限を確認
+- **バックアップ**: 移譲前に必ずバックアップを取る
+
+### �� 移譲のタイミング
+- プロジェクトが安定している時
+- チーム開発を開始する前
+- 本番運用を開始する前
+
+### �� 移譲前チェックリスト
+- [ ] バックアップ完了
+- [ ] 会社アカウント作成済み
+- [ ] 移譲権限確認
+- [ ] 環境変数の値をメモ
+- [ ] ドメイン設定の確認
+- [ ] チームメンバーの準備
+
+## トラブルシューティング
+
+### GitHub移譲でエラーが出た場合
+- 会社アカウントの権限を確認
+- リポジトリの設定を確認
+- GitHubサポートに問い合わせ
+
+### Vercel移譲でエラーが出た場合
+- 環境変数の再設定
+- ドメイン設定の確認
+- Vercelサポートに問い合わせ
+
+### 移譲後アクセスできない場合
+- 権限設定の確認
+- チームメンバーの招待確認
+- リモートURLの確認
+
+## 完了後の状態
+
+✅ **GitHub**: 会社アカウントで管理
+✅ **Vercel**: 会社アカウントで管理
+✅ **環境変数**: 再設定完了
+✅ **チーム**: 適切な権限設定
+✅ **ドキュメント**: 更新完了
+✅ **動作確認**: 正常に動作
+
+## 参考リンク
+
+- [GitHub Transfer Ownership](https://docs.github.com/en/repositories/creating-and-managing-repositories/transferring-a-repository)
+- [Vercel Transfer Project](https://vercel.com/docs/projects/transfer-project)
+- [Google Sheets API Setup](https://developers.google.com/sheets/api/guides/authorizing)
