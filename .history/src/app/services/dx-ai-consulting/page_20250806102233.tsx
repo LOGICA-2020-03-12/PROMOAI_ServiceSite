@@ -4,9 +4,9 @@ import { useInView } from "react-intersection-observer";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { FiArrowLeft, FiUsers, FiTarget, FiBook, FiVideo } from "react-icons/fi";
+import { FiArrowLeft, FiCpu, FiTarget, FiZap, FiDatabase, FiCloud } from "react-icons/fi";
 
-export default function ManualVideoPage() {
+export default function DXAIConsultingPage() {
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
@@ -60,39 +60,51 @@ export default function ManualVideoPage() {
 
   // サービス特徴
   const features = [
-    "書面マニュアルの動画化",
-    "アニメーション・CGを活用した分かりやすい説明",
-    "チーム全体の認識統一",
-    "業務効率化の実現",
-    "教育効果の向上",
-    "コスト削減と品質向上"
+    "DX戦略の立案・実行支援",
+    "AI導入の最適化提案",
+    "業務プロセスのデジタル化",
+    "データ活用基盤の構築",
+    "組織変革のサポート",
+    "継続的な改善支援"
   ];
 
-  // 活用シーン
-  const useCases = [
+  // 対応領域
+  const serviceAreas = [
     {
-      title: "業務マニュアル",
-      icon: FiBook,
-      description: "新入社員研修や業務手順の標準化",
+      title: "DX戦略立案",
+      icon: FiTarget,
+      description: "企業のデジタル変革戦略の策定と実行計画の立案",
       color: "from-blue-500 to-blue-600"
     },
     {
-      title: "製品説明動画",
-      icon: FiVideo,
-      description: "製品の使用方法や機能説明",
+      title: "AI導入支援",
+      icon: FiCpu,
+      description: "AI技術の選定から導入、運用まで一貫サポート",
+      color: "from-purple-500 to-purple-600"
+    },
+    {
+      title: "業務効率化",
+      icon: FiZap,
+      description: "既存業務の分析とデジタル化による効率化",
       color: "from-green-500 to-green-600"
     },
     {
-      title: "安全教育",
-      icon: FiUsers,
-      description: "安全作業手順や注意事項の周知",
-      color: "from-red-500 to-red-600"
+      title: "データ戦略",
+      icon: FiDatabase,
+      description: "データ活用基盤の構築と分析体制の確立",
+      color: "from-orange-500 to-orange-600"
     },
     {
-      title: "システム操作",
-      icon: FiTarget,
-      description: "社内システムの操作方法説明",
-      color: "from-purple-500 to-purple-600"
+      title: "クラウド移行",
+      icon: FiCloud,
+      description: "クラウド環境への移行計画と実行支援",
+      color: "from-indigo-500 to-indigo-600"
+    },
+    {
+      title: "セキュリティ強化",
+      icon: FiShield,
+      description: "デジタル化に伴うセキュリティ対策の強化",
+      color: "from-red-500 to-red-600"
     }
   ];
 
@@ -105,8 +117,8 @@ export default function ManualVideoPage() {
         {/* 背景画像 */}
         <div className="absolute inset-0">
           <Image
-            src="/images/マニュアル動画制作.jpg"
-            alt="マニュアル動画制作(法人向け)"
+            src="/images/DX推進.jpg"
+            alt="DX推進／AIコンサル"
             fill
             className="object-cover"
             priority
@@ -138,7 +150,7 @@ export default function ManualVideoPage() {
             className="mb-6"
           >
             <div className="inline-block border border-white/30 rounded-full px-6 py-2 mb-6">
-              <span className="text-white font-medium">Manual Video Production for Business</span>
+              <span className="text-white font-medium">DX & AI Consulting</span>
             </div>
           </motion.div>
           
@@ -150,8 +162,7 @@ export default function ManualVideoPage() {
             onMouseEnter={enterHover}
             onMouseLeave={leaveHover}
           >
-            マニュアル動画制作<br />
-            <span className="text-2xl md:text-3xl font-normal text-gray-300">(法人向け)</span>
+            DX推進／AIコンサル
           </motion.h1>
           
           <motion.p
@@ -160,8 +171,8 @@ export default function ManualVideoPage() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="text-xl md:text-2xl text-gray-300 max-w-6xl mx-auto leading-relaxed"
           >
-            書面やデータのマニュアルをベースに、アニメーションやCGを活用した動画マニュアルを制作。<br />
-            チームの認識齟齬を解消し、業務効率化と教育効果を実現します。
+            企業のデジタル変革を戦略的に支援し、AI技術の最適な活用を実現。<br />
+            業務効率化から競争力強化まで、包括的なDXコンサルティングを提供します。
           </motion.p>
         </div>
 
@@ -195,7 +206,7 @@ export default function ManualVideoPage() {
               サービスの特徴
             </h2>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              法人企業の教育・研修ニーズに特化した、高品質なマニュアル動画制作サービスを提供します。
+              企業のデジタル変革を成功に導く、戦略的で実践的なコンサルティングサービスを提供します。
             </p>
           </motion.div>
 
@@ -219,7 +230,7 @@ export default function ManualVideoPage() {
         </div>
       </section>
 
-      {/* 活用シーンセクション */}
+      {/* 対応領域セクション */}
       <section className="py-20 bg-[#0f0f0f]">
         <div className="container-custom">
           <motion.div
@@ -228,15 +239,15 @@ export default function ManualVideoPage() {
             className="text-center mb-16"
           >
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-              活用シーン
+              対応領域
             </h2>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              様々な業務シーンで活用できるマニュアル動画制作サービスを提供します。
+              DX推進とAI活用における幅広い領域で、専門的なコンサルティングを提供します。
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {useCases.map((useCase, index) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {serviceAreas.map((area, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 30 }}
@@ -246,11 +257,11 @@ export default function ManualVideoPage() {
                 onMouseEnter={enterHover}
                 onMouseLeave={leaveHover}
               >
-                <div className={`w-16 h-16 bg-gradient-to-r ${useCase.color} rounded-full flex items-center justify-center mx-auto mb-4`}>
-                  <useCase.icon className="text-white text-2xl" />
+                <div className={`w-16 h-16 bg-gradient-to-r ${area.color} rounded-full flex items-center justify-center mx-auto mb-4`}>
+                  <area.icon className="text-white text-2xl" />
                 </div>
-                <h3 className="text-white font-bold text-lg mb-2">{useCase.title}</h3>
-                <p className="text-gray-300 text-sm leading-relaxed">{useCase.description}</p>
+                <h3 className="text-white font-bold text-lg mb-2">{area.title}</h3>
+                <p className="text-gray-300 text-sm leading-relaxed">{area.description}</p>
               </motion.div>
             ))}
           </div>
@@ -267,21 +278,21 @@ export default function ManualVideoPage() {
             animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.8 }}
           >
-            {/* 見積もりシミュレーターボタン */}
+            {/* 無料相談ボタン */}
             <div>
               <Link
-                href="/estimate"
-                className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-bold text-lg rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                href="/contact"
+                className="inline-flex items-center px-12 py-6 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-bold text-2xl rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
                 onMouseEnter={enterHover}
                 onMouseLeave={leaveHover}
               >
-                見積もりシミュレーター
-                <svg className="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                無料相談する
+                <svg className="ml-3 w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
               </Link>
-              <p className="text-gray-400 text-sm mt-4">
-                あなたの要件に合わせた詳細な見積もりをシミュレーション
+              <p className="text-gray-400 text-base mt-6">
+                DX推進やAI導入について、専門コンサルタントが無料でご相談をお受けします
               </p>
             </div>
           </motion.div>
