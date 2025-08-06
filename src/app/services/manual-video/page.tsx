@@ -146,22 +146,34 @@ export default function ManualVideoPage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-5xl md:text-7xl font-bold tracking-tight mb-6"
+            className="text-3xl md:text-7xl font-bold tracking-tight mb-6"
             onMouseEnter={enterHover}
             onMouseLeave={leaveHover}
           >
-            マニュアル動画制作<br />
-            <span className="text-2xl md:text-3xl font-normal text-gray-300">(法人向け)</span>
+            <span className="hidden md:inline">
+              マニュアル動画制作<br />
+              <span className="text-2xl md:text-3xl font-normal text-gray-300">(法人向け)</span>
+            </span>
+            <span className="md:hidden">
+              マニュアル動画制作<br />
+              <span className="text-lg font-normal text-gray-300">(法人向け)</span>
+            </span>
           </motion.h1>
           
           <motion.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-xl md:text-2xl text-gray-300 max-w-6xl mx-auto leading-relaxed"
+            className="text-lg md:text-2xl text-gray-300 max-w-6xl mx-auto leading-relaxed px-4"
           >
-            書面やデータのマニュアルをベースに、アニメーションやCGを活用した動画マニュアルを制作。<br />
-            チームの認識齟齬を解消し、業務効率化と教育効果を実現します。
+            <span className="hidden md:inline">
+              書面やデータのマニュアルをベースに、アニメーションやCGを活用した動画マニュアルを制作。<br />
+              チームの認識齟齬を解消し、業務効率化と教育効果を実現します。
+            </span>
+            <span className="md:hidden">
+              書面やデータのマニュアルをベースに、<br />
+              アニメーションやCGを活用した動画マニュアルを制作します。
+            </span>
           </motion.p>
         </div>
 
@@ -191,11 +203,16 @@ export default function ManualVideoPage() {
             animate={inView ? "visible" : "hidden"}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+            <h2 className="text-2xl md:text-5xl font-bold text-white mb-6">
               サービスの特徴
             </h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              法人企業の教育・研修ニーズに特化した、高品質なマニュアル動画制作サービスを提供します。
+            <p className="text-base md:text-xl text-gray-300 max-w-3xl mx-auto px-4">
+              <span className="hidden md:inline">
+                法人企業の教育・研修ニーズに特化した、高品質なマニュアル動画制作サービスを提供します。
+              </span>
+              <span className="md:hidden">
+                法人企業の教育・研修ニーズに特化した、高品質なマニュアル動画制作サービスを提供します。
+              </span>
             </p>
           </motion.div>
 
@@ -227,11 +244,16 @@ export default function ManualVideoPage() {
             animate={inView ? "visible" : "hidden"}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+            <h2 className="text-2xl md:text-5xl font-bold text-white mb-6">
               活用シーン
             </h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              様々な業務シーンで活用できるマニュアル動画制作サービスを提供します。
+            <p className="text-base md:text-xl text-gray-300 max-w-3xl mx-auto px-4">
+              <span className="hidden md:inline">
+                様々な業務シーンで活用できるマニュアル動画制作サービスを提供します。
+              </span>
+              <span className="md:hidden">
+                様々な業務シーンで活用できるマニュアル動画制作サービスを提供します。
+              </span>
             </p>
           </motion.div>
 
@@ -280,7 +302,7 @@ export default function ManualVideoPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
               </Link>
-              <p className="text-gray-400 text-sm mt-4">
+              <p className="text-gray-400 text-sm mt-4 hidden md:block">
                 あなたの要件に合わせた詳細な見積もりをシミュレーション
               </p>
             </div>

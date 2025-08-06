@@ -199,6 +199,7 @@ const About = () => {
       step: "01",
       title: "ヒアリング",
       description: "クライアント様の事業目標とターゲットオーディエンスを深く理解し、明確なKPIを設定します。AIを活用した市場分析により、競合環境や最新トレンドを踏まえた戦略立案の基盤を構築します。",
+      mobileDescription: "事業目標とターゲットを理解し、KPIを設定。AI分析で戦略立案の基盤を構築。",
       icon: HearingIcon,
       isOptional: false,
     },
@@ -206,6 +207,7 @@ const About = () => {
       step: "02",
       title: "企画・設計",
       description: "AIによるデータ分析と創造的アイデア生成を組み合わせ、効果的なコンセプトと構成を設計します。複数の企画案をシミュレーションし、目標達成に最適な戦略を選定。ストーリーボードやシナリオも迅速に作成します。",
+      mobileDescription: "AI分析と創造的アイデアでコンセプト設計。複数案から最適な戦略を選定。",
       icon: PlanningIcon,
       isOptional: false,
     },
@@ -213,6 +215,7 @@ const About = () => {
       step: "03",
       title: "制作",
       description: "最先端のAIツールを駆使した映像・音声制作により、従来の数分の1の時間で高品質なコンテンツを生成します。人間のクリエイターとAIの協働により、クリエイティブの質と量を両立させた多様なバリエーションを実現します。",
+      mobileDescription: "AIツールで高速・高品質なコンテンツ生成。人間とAIの協働で質と量を両立。",
       icon: ProductionIcon,
       isOptional: false,
     },
@@ -220,6 +223,7 @@ const About = () => {
       step: "04",
       title: "配信・運用",
       description: "最適なプラットフォームとタイミングで効率的に配信。リアルタイムデータ分析に基づき、AIが視聴者の反応を予測しながら継続的に運用を最適化します。A/Bテストを自動化し、パフォーマンスを常に向上させます。",
+      mobileDescription: "最適なプラットフォームで配信。AI分析で運用を最適化し、パフォーマンス向上。",
       icon: DeploymentIcon,
       isOptional: true,
     },
@@ -227,6 +231,7 @@ const About = () => {
       step: "05",
       title: "レポート",
       description: "直感的なダッシュボードで成果をリアルタイムに可視化。AIによる高度な分析で、視聴者行動や感情反応まで詳細に把握できます。データに基づく次回施策の提案と、長期的な改善サイクルの構築をサポートします。",
+      mobileDescription: "リアルタイムダッシュボードで成果を可視化。AI分析で次回施策を提案。",
       icon: ReportIcon,
       isOptional: true,
     }
@@ -329,7 +334,7 @@ const About = () => {
 
       <section 
         id="about" 
-        className={`py-36 md:py-44 relative overflow-hidden ${!isTouchDevice ? 'cursor-none' : ''}`}
+        className={`py-20 md:py-44 relative overflow-hidden ${!isTouchDevice ? 'cursor-none' : ''}`}
         style={{
           backgroundImage: "url('/images/背景3.png')",
           backgroundSize: "cover",
@@ -345,8 +350,8 @@ const About = () => {
         ></div>
         
         <div className="container-custom relative z-20">
-          <div className="flex flex-col items-start mb-16">
-            <div className="flex items-center mb-6">
+          <div className="flex flex-col items-center md:items-start mb-8 md:mb-16">
+            <div className="flex items-center mb-4 md:mb-6">
               <div className="inline-block border border-amber-300/30 rounded-full px-6 py-2">
                 <span className="text-amber-100 font-medium">About</span>
               </div>
@@ -356,7 +361,7 @@ const About = () => {
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.7, ease: [0.6, 0.05, 0.01, 0.9] }}
-              className="mb-10"
+              className="mb-6 md:mb-10 text-center md:text-left"
             >
               {/* デスクトップ用タイトル */}
               <h2 
@@ -403,7 +408,7 @@ const About = () => {
             </motion.div>
           </div>
 
-          <div className="flex flex-col space-y-24 md:space-y-36 mt-16 md:mt-32 lg:mt-40">
+          <div className="flex flex-col space-y-16 md:space-y-36 mt-8 md:mt-32 lg:mt-40">
             {features.map((feature, index) => (
               <motion.div
                 key={index}
@@ -411,14 +416,14 @@ const About = () => {
                 variants={itemVariants}
                 initial="hidden"
                 animate={feature.inView ? "visible" : "hidden"}
-                className={`flex flex-col ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} gap-6 md:gap-16`}
+                className={`flex flex-col ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} gap-4 md:gap-16`}
                 onMouseEnter={enterHover}
                 onMouseLeave={leaveHover}
               >
                 {/* 画像エリア */}
                 <div className="md:w-1/2 relative rounded-xl group">
-                  {/* 番号表示 - 画像の上部に配置 */}
-                  <div className="absolute -top-6 -left-6 md:-top-8 md:-left-8 z-30">
+                  {/* 番号表示 - 画像の上部に配置（スマホ時は非表示） */}
+                  <div className="absolute -top-6 -left-6 md:-top-8 md:-left-8 z-30 hidden md:block">
                     <div className="relative">
                       <div className="text-5xl md:text-7xl lg:text-8xl font-black text-amber-500/15 leading-none tracking-wider">
                         {feature.number}
@@ -484,10 +489,16 @@ const About = () => {
                 {/* テキストエリア */}
                 <div className="md:w-1/2">
                   <div className="mb-4">
-                    <h3 className="text-xl md:text-2xl lg:text-3xl font-bold mb-4 md:mb-6 text-silver border-l-4 border-amber-400 pl-3 md:pl-4">
+                    {/* スマホ用の番号表示 */}
+                    <div className="flex items-center mb-3 md:hidden">
+                      <span className="text-2xl font-black text-amber-500/60 mr-3">{feature.number}</span>
+                      <div className="h-px flex-1 bg-gradient-to-r from-amber-400/30 to-transparent"></div>
+                    </div>
+                    
+                    <h3 className="text-lg md:text-2xl lg:text-3xl font-bold mb-3 md:mb-6 text-silver border-l-4 border-amber-400 pl-3 md:pl-4">
                       {feature.title}
                     </h3>
-                    <p className="text-amber-100/80 leading-relaxed text-sm md:text-base">
+                    <p className="text-amber-100/80 leading-relaxed text-sm md:text-base line-clamp-4 md:line-clamp-none">
                       {feature.description}
                     </p>
                   </div>
@@ -501,7 +512,7 @@ const About = () => {
         <div className="container-custom relative z-20 mt-20">
           <div className="text-center mb-16">
             <h2 
-              className="text-5xl md:text-6xl font-bold tracking-tight text-white"
+              className="text-2xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white"
               onMouseEnter={enterHover}
               onMouseLeave={leaveHover}
             >
@@ -512,7 +523,8 @@ const About = () => {
             </h2>
           </div>
 
-          <div className="overflow-x-auto">
+          {/* デスクトップ用の表 */}
+          <div className="hidden md:block overflow-x-auto">
             <motion.table
               variants={containerVariants}
               initial="hidden"
@@ -546,6 +558,33 @@ const About = () => {
             </motion.table>
           </div>
 
+          {/* スマホ用のカード形式 */}
+          <div className="md:hidden space-y-6">
+            {comparisonData.map((row, index) => (
+              <motion.div
+                key={index}
+                variants={compareItemVariants}
+                initial="hidden"
+                animate="visible"
+                className="bg-blue-950/30 backdrop-blur-sm rounded-xl border border-gray-600/40 p-6 shadow-lg"
+              >
+                <div className="mb-4">
+                  <h3 className="text-amber-300 font-bold text-xl mb-3 border-b border-amber-500/30 pb-2">{row.item}</h3>
+                </div>
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between p-4 bg-gray-800/40 rounded-lg border border-gray-500/30">
+                    <span className="text-gray-300 text-base font-medium">従来の動画制作</span>
+                    <span className="text-gray-400 font-semibold text-lg">{row.traditional}</span>
+                  </div>
+                  <div className="flex items-center justify-between p-4 bg-amber-900/30 rounded-lg border border-amber-400/40 shadow-sm">
+                    <span className="text-amber-200 text-base font-bold">PROMO AI</span>
+                    <span className="text-amber-300 font-bold text-lg">{row.promoAi}</span>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
           <div className="mt-10 p-6 bg-black/50 backdrop-blur-sm rounded-lg border-l-4 border-amber-400/70">
             <p className="text-lg">
               <strong className="text-amber-300">スピード・一貫性・改善回数</strong> が成果を決定。PROMO AI は3点を AI で底上げ。
@@ -557,7 +596,7 @@ const About = () => {
         <div className="container-custom relative z-20 mt-20">
           <div className="text-center mb-16">
             <h2 
-              className="text-5xl md:text-6xl font-bold tracking-tight text-white"
+              className="text-2xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white"
               onMouseEnter={enterHover}
               onMouseLeave={leaveHover}
             >
@@ -592,15 +631,19 @@ const About = () => {
                     <Icon />
                   </div>
                   <h3 className="text-xl font-bold mb-3 text-amber-100">{step.title}</h3>
-                  <p className="text-amber-100/70 text-sm">{step.description}</p>
+                  <p className="text-amber-100/70 text-sm hidden md:block">{step.description}</p>
+                  <p className="text-amber-100/70 text-sm md:hidden">{step.mobileDescription}</p>
                 </motion.div>
               );
             })}
           </motion.div>
 
           <div className="mt-12 p-6 bg-black/50 backdrop-blur-sm rounded-lg border-l-4 border-amber-400/70">
-            <p className="text-lg">
+            <p className="text-lg hidden md:block">
               <strong className="text-amber-300">AI活用</strong> により、従来の制作プロセスを効率化し、<strong className="text-amber-300">スピード</strong>と<strong className="text-amber-300">品質</strong>を両立します。各ステップでデータとクリエイティブの融合を実現し、<strong className="text-amber-300">最大限の成果</strong>を生み出します。
+            </p>
+            <p className="text-base md:hidden">
+              <strong className="text-amber-300">AI活用</strong>により、<strong className="text-amber-300">スピード</strong>と<strong className="text-amber-300">品質</strong>を両立。最大限の成果を実現します。
             </p>
           </div>
         </div>

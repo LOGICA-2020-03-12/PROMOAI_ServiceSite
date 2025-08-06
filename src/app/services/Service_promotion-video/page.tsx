@@ -150,21 +150,31 @@ export default function PromotionVideoPage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-5xl md:text-7xl font-bold tracking-tight mb-6"
+            className="text-3xl md:text-7xl font-bold tracking-tight mb-6"
             onMouseEnter={enterHover}
             onMouseLeave={leaveHover}
           >
-            広告用のプロモーション動画制作
+            <span className="hidden md:inline">広告用のプロモーション動画制作</span>
+            <span className="md:hidden">
+              広告用の<br />
+              プロモーション動画制作
+            </span>
           </motion.h1>
           
           <motion.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-xl md:text-2xl text-gray-300 max-w-4xl mx-auto leading-relaxed"
+            className="text-lg md:text-2xl text-gray-300 max-w-4xl mx-auto leading-relaxed px-4"
           >
-            商品やサービスの魅力を最大限に引き出すプロモーション動画を制作します。<br />
-            AI技術を活用した効率的な映像制作で、短納期・高品質を実現します。
+            <span className="hidden md:inline">
+              商品やサービスの魅力を最大限に引き出すプロモーション動画を制作します。<br />
+              AI技術を活用した効率的な映像制作で、短納期・高品質を実現します。
+            </span>
+            <span className="md:hidden">
+              商品やサービスの魅力を最大限に引き出す<br />
+              プロモーション動画を制作します。
+            </span>
           </motion.p>
         </div>
 
@@ -194,11 +204,16 @@ export default function PromotionVideoPage() {
             animate={inView ? "visible" : "hidden"}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+            <h2 className="text-2xl md:text-5xl font-bold text-white mb-6">
               サービスの特徴
             </h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              AI技術とクリエイティブの融合で、従来の映像制作では実現できない効率性と品質を提供します。
+            <p className="text-base md:text-xl text-gray-300 max-w-3xl mx-auto px-4">
+              <span className="hidden md:inline">
+                AI技術とクリエイティブの融合で、従来の映像制作では実現できない効率性と品質を提供します。
+              </span>
+              <span className="md:hidden">
+                AI技術とクリエイティブの融合で、効率性と品質を提供します。
+              </span>
             </p>
           </motion.div>
 
@@ -230,11 +245,16 @@ export default function PromotionVideoPage() {
             animate={inView ? "visible" : "hidden"}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+            <h2 className="text-2xl md:text-5xl font-bold text-white mb-6">
               制作フロー
             </h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              5つのステップで、お客様のビジョンを形にします。
+            <p className="text-base md:text-xl text-gray-300 max-w-3xl mx-auto px-4">
+              <span className="hidden md:inline">
+                5つのステップで、お客様のビジョンを形にします。
+              </span>
+              <span className="md:hidden">
+                5つのステップでビジョンを形にします。
+              </span>
             </p>
           </motion.div>
 
@@ -251,12 +271,21 @@ export default function PromotionVideoPage() {
               >
                 <div className="flex-1">
                   <div className="flex items-center mb-4">
-                    <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mr-4">
-                      <span className="text-white font-bold text-xl">{step.step}</span>
+                    <div className="w-12 h-12 md:w-16 md:h-16 bg-primary rounded-full flex items-center justify-center mr-4">
+                      <span className="text-white font-bold text-lg md:text-xl">{step.step}</span>
                     </div>
-                    <h3 className="text-2xl font-bold text-white">{step.title}</h3>
+                    <h3 className="text-xl md:text-2xl font-bold text-white">{step.title}</h3>
                   </div>
-                  <p className="text-gray-300 text-lg leading-relaxed">{step.description}</p>
+                  <p className="text-gray-300 text-base md:text-lg leading-relaxed">
+                    <span className="hidden md:inline">{step.description}</span>
+                    <span className="md:hidden">
+                      {step.title === "ヒアリング・企画" && "商品・サービスの特徴、ターゲット層、目的をヒアリングし、最適な企画を提案します。"}
+                      {step.title === "シナリオ・絵コンテ制作" && "企画に基づいてシナリオを作成し、視覚的な絵コンテで制作イメージを共有します。"}
+                      {step.title === "撮影・素材制作" && "プロのカメラマンによる高品質な撮影と、必要に応じてCG・アニメーション素材を制作します。"}
+                      {step.title === "編集・仕上げ" && "AI技術を活用した効率的な編集作業で、魅力的な映像に仕上げます。"}
+                      {step.title === "納品・効果測定" && "最適なフォーマットで納品し、効果測定のサポートも提供します。"}
+                    </span>
+                  </p>
                 </div>
                 <div className="flex-1">
                   <div className="w-full h-64 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-lg border border-white/10 relative overflow-hidden">
@@ -296,7 +325,7 @@ export default function PromotionVideoPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
               </Link>
-              <p className="text-gray-400 text-sm mt-4">
+              <p className="text-gray-400 text-sm mt-4 hidden md:block">
                 あなたの要件に合わせた詳細な見積もりをシミュレーション
               </p>
             </div>

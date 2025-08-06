@@ -158,21 +158,31 @@ export default function DXAIConsultingPage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-5xl md:text-7xl font-bold tracking-tight mb-6"
+            className="text-3xl md:text-7xl font-bold tracking-tight mb-6"
             onMouseEnter={enterHover}
             onMouseLeave={leaveHover}
           >
-            DX推進／AIコンサル
+            <span className="hidden md:inline">DX推進／AIコンサル</span>
+            <span className="md:hidden">
+              DX推進／<br />
+              AIコンサル
+            </span>
           </motion.h1>
           
           <motion.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-xl md:text-2xl text-gray-300 max-w-6xl mx-auto leading-relaxed"
+            className="text-lg md:text-2xl text-gray-300 max-w-6xl mx-auto leading-relaxed px-4"
           >
-            企業のデジタル変革を戦略的に支援し、AI技術の最適な活用を実現。<br />
-            業務効率化から競争力強化まで、包括的なDXコンサルティングを提供します。
+            <span className="hidden md:inline">
+              企業のデジタル変革を戦略的に支援し、AI技術の最適な活用を実現。<br />
+              業務効率化から競争力強化まで、包括的なDXコンサルティングを提供します。
+            </span>
+            <span className="md:hidden">
+              企業のデジタル変革を戦略的に支援し、<br />
+              AI技術の最適な活用を実現します。
+            </span>
           </motion.p>
         </div>
 
@@ -202,11 +212,16 @@ export default function DXAIConsultingPage() {
             animate={inView ? "visible" : "hidden"}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+            <h2 className="text-2xl md:text-5xl font-bold text-white mb-6">
               サービスの特徴
             </h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              企業のデジタル変革を成功に導く、戦略的で実践的なコンサルティングサービスを提供します。
+            <p className="text-base md:text-xl text-gray-300 max-w-3xl mx-auto px-4">
+              <span className="hidden md:inline">
+                企業のデジタル変革を成功に導く、戦略的で実践的なコンサルティングサービスを提供します。
+              </span>
+              <span className="md:hidden">
+                企業のデジタル変革を成功に導く、戦略的なコンサルティングサービスを提供します。
+              </span>
             </p>
           </motion.div>
 
@@ -238,11 +253,16 @@ export default function DXAIConsultingPage() {
             animate={inView ? "visible" : "hidden"}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+            <h2 className="text-2xl md:text-5xl font-bold text-white mb-6">
               対応領域
             </h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              DX推進とAI活用における幅広い領域で、専門的なコンサルティングを提供します。
+            <p className="text-base md:text-xl text-gray-300 max-w-3xl mx-auto px-4">
+              <span className="hidden md:inline">
+                DX推進とAI活用における幅広い領域で、専門的なコンサルティングを提供します。
+              </span>
+              <span className="md:hidden">
+                DX推進とAI活用における幅広い領域で、専門的なコンサルティングを提供します。
+              </span>
             </p>
           </motion.div>
 
@@ -291,8 +311,8 @@ export default function DXAIConsultingPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
               </Link>
-              <p className="text-gray-400 text-base mt-6">
-                DX推進やAI導入について、専門コンサルタントが無料でご相談をお受けします
+              <p className="text-gray-400 text-sm mt-4 hidden md:block">
+                あなたの要件に合わせた詳細な見積もりをシミュレーション
               </p>
             </div>
           </motion.div>

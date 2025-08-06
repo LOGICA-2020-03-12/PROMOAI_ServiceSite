@@ -193,6 +193,35 @@ body {
   overflow: hidden;
 }
 
+/* スマホ用のスクロールバーカスタマイズ */
+@media (max-width: 768px) {
+  /* Webkit系ブラウザ（Chrome, Safari, Edge）用 */
+  .overflow-x-auto::-webkit-scrollbar {
+    height: 12px; /* スクロールバーの高さを太く */
+  }
+  
+  .overflow-x-auto::-webkit-scrollbar-track {
+    background: rgba(59, 130, 246, 0.1); /* 青い背景 */
+    border-radius: 6px;
+  }
+  
+  .overflow-x-auto::-webkit-scrollbar-thumb {
+    background: linear-gradient(90deg, #3b82f6, #1d4ed8); /* 青いグラデーション */
+    border-radius: 6px;
+    border: 2px solid rgba(59, 130, 246, 0.2);
+  }
+  
+  .overflow-x-auto::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(90deg, #2563eb, #1e40af); /* ホバー時の濃い青 */
+  }
+  
+  /* Firefox用 */
+  .overflow-x-auto {
+    scrollbar-width: thick;
+    scrollbar-color: #3b82f6 rgba(59, 130, 246, 0.1);
+  }
+}
+
 /* タッチデバイス用のスタイル */
 @media (hover: none) and (pointer: coarse) {
   /* タッチデバイスではホバーエフェクトを無効化 */
@@ -214,5 +243,10 @@ body {
   
   .group:hover .group-hover\:translate-x-1 {
     transform: none;
+  }
+  
+  /* スクロールバーのホバー効果も無効化 */
+  .overflow-x-auto::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(90deg, #3b82f6, #1d4ed8);
   }
 }

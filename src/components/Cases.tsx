@@ -160,8 +160,8 @@ const Cases = () => {
   return (
     <section id="cases" className="py-20 md:py-28 bg-[#1a1a1a] cursor-none">
       <div className="container-custom relative">
-        <div className="flex flex-col items-start mb-16">
-          <div className="flex items-center mb-6">
+        <div className="flex flex-col items-center md:items-start mb-8 md:mb-16">
+          <div className="flex items-center mb-4 md:mb-6">
             <div className="inline-block border border-white/30 rounded-full px-6 py-2">
               <span className="text-white font-medium">Works</span>
             </div>
@@ -172,10 +172,10 @@ const Cases = () => {
             initial="hidden"
             animate={inView ? "visible" : "hidden"}
             variants={titleVariants}
-            className="mb-8"
+            className="mb-6 md:mb-8 text-center md:text-left"
           >
             <h2 
-              className="text-6xl md:text-7xl font-bold tracking-tight text-white"
+              className="text-3xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white"
               onMouseEnter={enterHover}
               onMouseLeave={leaveHover}
             >
@@ -184,7 +184,8 @@ const Cases = () => {
           </motion.div>
         </div>
           
-        <div className="absolute right-0 top-0 z-10 pointer-events-none">
+        {/* デスクトップ用サブタイトル */}
+        <div className="absolute right-0 top-0 z-10 pointer-events-none hidden md:block">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -208,8 +209,8 @@ const Cases = () => {
           </motion.div>
         </div>
 
-        {/* BET ON CREATIVEのテキストの高さ分、余白を追加 */}
-        <div className="pt-10 md:pt-20 lg:pt-28"></div>
+        {/* BET ON CREATIVEのテキストの高さ分、余白を追加（デスクトップのみ） */}
+        <div className="pt-0 md:pt-20 lg:pt-28"></div>
 
         <motion.div
           variants={containerVariants}

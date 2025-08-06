@@ -178,21 +178,31 @@ export default function SNSMarketingPage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-5xl md:text-7xl font-bold tracking-tight mb-6"
+            className="text-3xl md:text-7xl font-bold tracking-tight mb-6"
             onMouseEnter={enterHover}
             onMouseLeave={leaveHover}
           >
-            SNS運用／各種動画制作
+            <span className="hidden md:inline">SNS運用／各種動画制作</span>
+            <span className="md:hidden">
+              SNS運用／<br />
+              各種動画制作
+            </span>
           </motion.h1>
           
           <motion.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-xl md:text-2xl text-gray-300 max-w-6xl mx-auto leading-relaxed"
+            className="text-lg md:text-2xl text-gray-300 max-w-6xl mx-auto leading-relaxed px-4"
           >
-            SNSアカウントの運用代行から、投稿用の動画コンテンツ制作まで一貫してサポート。<br />
-            エンゲージメント向上につながるコンテンツ戦略を提案します。
+            <span className="hidden md:inline">
+              SNSアカウントの運用代行から、投稿用の動画コンテンツ制作まで一貫してサポート。<br />
+              エンゲージメント向上につながるコンテンツ戦略を提案します。
+            </span>
+            <span className="md:hidden">
+              SNSアカウントの運用代行から、<br />
+              投稿用の動画コンテンツ制作まで一貫してサポートします。
+            </span>
           </motion.p>
         </div>
 
@@ -222,11 +232,16 @@ export default function SNSMarketingPage() {
             animate={inView ? "visible" : "hidden"}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+            <h2 className="text-2xl md:text-5xl font-bold text-white mb-6">
               サービスの特徴
             </h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              SNSマーケティングと動画制作の専門知識を組み合わせ、効果的なブランド構築を実現します。
+            <p className="text-base md:text-xl text-gray-300 max-w-3xl mx-auto px-4">
+              <span className="hidden md:inline">
+                SNSマーケティングと動画制作の専門知識を組み合わせ、効果的なブランド構築を実現します。
+              </span>
+              <span className="md:hidden">
+                SNSマーケティングと動画制作の専門知識を組み合わせ、効果的なブランド構築を実現します。
+              </span>
             </p>
           </motion.div>
 
@@ -258,11 +273,16 @@ export default function SNSMarketingPage() {
             animate={inView ? "visible" : "hidden"}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+            <h2 className="text-2xl md:text-5xl font-bold text-white mb-6">
               対応プラットフォーム
             </h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              各プラットフォームの特性を活かした最適なコンテンツ戦略を提供します。
+            <p className="text-base md:text-xl text-gray-300 max-w-3xl mx-auto px-4">
+              <span className="hidden md:inline">
+                各プラットフォームの特性を活かした最適なコンテンツ戦略を提供します。
+              </span>
+              <span className="md:hidden">
+                各プラットフォームの特性を活かした最適なコンテンツ戦略を提供します。
+              </span>
             </p>
           </motion.div>
 
@@ -296,11 +316,16 @@ export default function SNSMarketingPage() {
             animate={inView ? "visible" : "hidden"}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+            <h2 className="text-2xl md:text-5xl font-bold text-white mb-6">
               運用フロー
             </h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              5つのステップで、効果的なSNS運用を実現します。
+            <p className="text-base md:text-xl text-gray-300 max-w-3xl mx-auto px-4">
+              <span className="hidden md:inline">
+                5つのステップで、効果的なSNS運用を実現します。
+              </span>
+              <span className="md:hidden">
+                5つのステップで効果的なSNS運用を実現します。
+              </span>
             </p>
           </motion.div>
 
@@ -362,7 +387,7 @@ export default function SNSMarketingPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
               </Link>
-              <p className="text-gray-400 text-sm mt-4">
+              <p className="text-gray-400 text-sm mt-4 hidden md:block">
                 あなたの要件に合わせた詳細な見積もりをシミュレーション
               </p>
             </div>
