@@ -192,3 +192,27 @@ body {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+/* タッチデバイス用のスタイル */
+@media (hover: none) and (pointer: coarse) {
+  /* タッチデバイスではホバーエフェクトを無効化 */
+  .hover\:scale-105:hover {
+    transform: none;
+  }
+  
+  .hover\:shadow-xl:hover {
+    box-shadow: inherit;
+  }
+  
+  .group:hover .group-hover\:opacity-100 {
+    opacity: inherit;
+  }
+  
+  .group:hover .group-hover\:scale-105 {
+    transform: none;
+  }
+  
+  .group:hover .group-hover\:translate-x-1 {
+    transform: none;
+  }
+}

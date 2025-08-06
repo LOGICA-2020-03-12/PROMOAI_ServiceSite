@@ -16,7 +16,8 @@ const BottomActions = () => {
           className="flex items-center"
         >
           <FiMail size={20} className="mr-2" />
-          <span className="font-medium">お問い合わせ</span>
+          <span className="font-medium hidden sm:inline">お問い合わせ</span>
+          <span className="font-medium sm:hidden">問い合わせ</span>
         </motion.div>
       </Link>
       
@@ -30,7 +31,8 @@ const BottomActions = () => {
           className="flex items-center"
         >
           <FiDownload size={20} className="mr-2" />
-          <span className="font-medium">無料で資料ダウンロード</span>
+          <span className="font-medium hidden sm:inline">無料で資料ダウンロード</span>
+          <span className="font-medium sm:hidden">資料DL</span>
         </motion.div>
       </Link>
     </div>

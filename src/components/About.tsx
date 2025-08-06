@@ -28,9 +28,20 @@ const About = () => {
   // カスタムカーソルの状態
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [cursorVariant, setCursorVariant] = useState("default");
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
 
-  // マウスの位置を追跡
+  // タッチデバイスかどうかを判定
   useEffect(() => {
+    const checkTouchDevice = () => {
+      setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0);
+    };
+    checkTouchDevice();
+  }, []);
+
+  // マウスの位置を追跡（タッチデバイス以外）
+  useEffect(() => {
+    if (isTouchDevice) return;
+
     const mouseMove = (e: MouseEvent) => {
       setMousePosition({
         x: e.clientX,
@@ -43,7 +54,7 @@ const About = () => {
     return () => {
       window.removeEventListener("mousemove", mouseMove);
     };
-  }, []);
+  }, [isTouchDevice]);
 
   // カーソルのバリアント
   const cursorVariants = {
@@ -67,9 +78,13 @@ const About = () => {
     },
   };
 
-  // ホバー状態の変更関数
-  const enterHover = () => setCursorVariant("hover");
-  const leaveHover = () => setCursorVariant("default");
+  // ホバー状態の変更関数（タッチデバイス以外）
+  const enterHover = () => {
+    if (!isTouchDevice) setCursorVariant("hover");
+  };
+  const leaveHover = () => {
+    if (!isTouchDevice) setCursorVariant("default");
+  };
 
   // カスタムラインアイコンコンポーネント
   const HearingIcon = () => (
@@ -280,37 +295,41 @@ const About = () => {
 
   return (
     <>
-      {/* カスタムカーソル */}
-      <motion.div
-        className="custom-cursor fixed top-0 left-0 w-8 h-8 rounded-full pointer-events-none z-50"
-        variants={cursorVariants}
-        animate={cursorVariant}
-        transition={{
-          type: "spring",
-          stiffness: 500,
-          damping: 28,
-          mass: 0.5,
-        }}
-      />
-      
-      {/* カーソルの内側の点 */}
-      <motion.div
-        className="fixed w-1.5 h-1.5 bg-amber-300 rounded-full pointer-events-none z-50"
-        style={{
-          x: mousePosition.x - 0.75,
-          y: mousePosition.y - 0.75,
-        }}
-        transition={{
-          type: "spring",
-          stiffness: 800,
-          damping: 25,
-          mass: 0.2,
-        }}
-      />
+      {/* カスタムカーソル（タッチデバイス以外） */}
+      {!isTouchDevice && (
+        <>
+          <motion.div
+            className="custom-cursor fixed top-0 left-0 w-8 h-8 rounded-full pointer-events-none z-50"
+            variants={cursorVariants}
+            animate={cursorVariant}
+            transition={{
+              type: "spring",
+              stiffness: 500,
+              damping: 28,
+              mass: 0.5,
+            }}
+          />
+          
+          {/* カーソルの内側の点 */}
+          <motion.div
+            className="fixed w-1.5 h-1.5 bg-amber-300 rounded-full pointer-events-none z-50"
+            style={{
+              x: mousePosition.x - 0.75,
+              y: mousePosition.y - 0.75,
+            }}
+            transition={{
+              type: "spring",
+              stiffness: 800,
+              damping: 25,
+              mass: 0.2,
+            }}
+          />
+        </>
+      )}
 
       <section 
         id="about" 
-        className="py-36 md:py-44 relative overflow-hidden cursor-none"
+        className={`py-36 md:py-44 relative overflow-hidden ${!isTouchDevice ? 'cursor-none' : ''}`}
         style={{
           backgroundImage: "url('/images/背景3.png')",
           backgroundSize: "cover",
@@ -339,8 +358,18 @@ const About = () => {
               transition={{ duration: 0.7, ease: [0.6, 0.05, 0.01, 0.9] }}
               className="mb-10"
             >
+              {/* デスクトップ用タイトル */}
               <h2 
-                className="text-6xl md:text-7xl font-bold tracking-tight text-white"
+                className="hidden md:block text-6xl md:text-7xl font-bold tracking-tight text-white"
+                onMouseEnter={enterHover}
+                onMouseLeave={leaveHover}
+              >
+                PROMO AIとは
+              </h2>
+              
+              {/* スマホ用タイトル */}
+              <h2 
+                className="md:hidden text-3xl font-bold tracking-tight text-white"
                 onMouseEnter={enterHover}
                 onMouseLeave={leaveHover}
               >
@@ -349,7 +378,8 @@ const About = () => {
             </motion.div>
           </div>
           
-          <div className="absolute right-0 top-0 z-10 pointer-events-none">
+          {/* デスクトップ用サブタイトル */}
+          <div className="absolute right-0 top-0 z-10 pointer-events-none hidden md:block">
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -373,7 +403,7 @@ const About = () => {
             </motion.div>
           </div>
 
-          <div className="flex flex-col space-y-36 mt-32 md:mt-40 lg:mt-48">
+          <div className="flex flex-col space-y-24 md:space-y-36 mt-16 md:mt-32 lg:mt-40">
             {features.map((feature, index) => (
               <motion.div
                 key={index}
@@ -381,19 +411,19 @@ const About = () => {
                 variants={itemVariants}
                 initial="hidden"
                 animate={feature.inView ? "visible" : "hidden"}
-                className={`flex flex-col ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} gap-8 md:gap-16`}
+                className={`flex flex-col ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} gap-6 md:gap-16`}
                 onMouseEnter={enterHover}
                 onMouseLeave={leaveHover}
               >
                 {/* 画像エリア */}
-                                <div className="md:w-1/2 relative rounded-xl group">
+                <div className="md:w-1/2 relative rounded-xl group">
                   {/* 番号表示 - 画像の上部に配置 */}
-                  <div className="absolute -top-8 -left-8 z-30">
+                  <div className="absolute -top-6 -left-6 md:-top-8 md:-left-8 z-30">
                     <div className="relative">
-                      <div className="text-7xl md:text-8xl font-black text-amber-500/15 leading-none tracking-wider">
+                      <div className="text-5xl md:text-7xl lg:text-8xl font-black text-amber-500/15 leading-none tracking-wider">
                         {feature.number}
                       </div>
-                      <div className="absolute inset-0 text-7xl md:text-8xl font-black text-amber-500/35 leading-none tracking-wider">
+                      <div className="absolute inset-0 text-5xl md:text-7xl lg:text-8xl font-black text-amber-500/35 leading-none tracking-wider">
                         {feature.number}
                       </div>
                     </div>
@@ -434,30 +464,30 @@ const About = () => {
                     )}
                     
                     {/* 角の装飾 - より洗練されたデザイン */}
-                    <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-amber-400/80 rounded-tl-xl z-20"></div>
-                    <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-amber-400/80 rounded-tr-xl z-20"></div>
-                    <div className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-amber-400/80 rounded-bl-xl z-20"></div>
-                    <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-amber-400/80 rounded-br-xl z-20"></div>
+                    <div className="absolute top-0 left-0 w-6 h-6 md:w-8 md:h-8 border-t-2 border-l-2 border-amber-400/80 rounded-tl-xl z-20"></div>
+                    <div className="absolute top-0 right-0 w-6 h-6 md:w-8 md:h-8 border-t-2 border-r-2 border-amber-400/80 rounded-tr-xl z-20"></div>
+                    <div className="absolute bottom-0 left-0 w-6 h-6 md:w-8 md:h-8 border-b-2 border-l-2 border-amber-400/80 rounded-bl-xl z-20"></div>
+                    <div className="absolute bottom-0 right-0 w-6 h-6 md:w-8 md:h-8 border-b-2 border-r-2 border-amber-400/80 rounded-br-xl z-20"></div>
                     
                     {/* 中央の装飾的なアクセント - 各コーナーに小さな光の点 */}
-                    <div className="absolute top-2 left-2 w-1 h-1 bg-amber-300 rounded-full shadow-glow-sm z-20"></div>
-                    <div className="absolute top-2 right-2 w-1 h-1 bg-amber-300 rounded-full shadow-glow-sm z-20"></div>
-                    <div className="absolute bottom-2 left-2 w-1 h-1 bg-amber-300 rounded-full shadow-glow-sm z-20"></div>
-                    <div className="absolute bottom-2 right-2 w-1 h-1 bg-amber-300 rounded-full shadow-glow-sm z-20"></div>
+                    <div className="absolute top-1.5 left-1.5 md:top-2 md:left-2 w-0.5 h-0.5 md:w-1 md:h-1 bg-amber-300 rounded-full shadow-glow-sm z-20"></div>
+                    <div className="absolute top-1.5 right-1.5 md:top-2 md:right-2 w-0.5 h-0.5 md:w-1 md:h-1 bg-amber-300 rounded-full shadow-glow-sm z-20"></div>
+                    <div className="absolute bottom-1.5 left-1.5 md:bottom-2 md:left-2 w-0.5 h-0.5 md:w-1 md:h-1 bg-amber-300 rounded-full shadow-glow-sm z-20"></div>
+                    <div className="absolute bottom-1.5 right-1.5 md:bottom-2 md:right-2 w-0.5 h-0.5 md:w-1 md:h-1 bg-amber-300 rounded-full shadow-glow-sm z-20"></div>
                   </div>
                   
-                  {/* 装飾的な光の線 */}
-                  <div className="absolute top-1/2 -right-4 w-8 h-0.5 bg-gradient-to-r from-transparent via-amber-400/80 to-transparent transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-300"></div>
-                  <div className="absolute top-1/2 -left-4 w-8 h-0.5 bg-gradient-to-r from-transparent via-amber-400/80 to-transparent transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-300"></div>
+                  {/* 装飾的な光の線（デスクトップのみ） */}
+                  <div className="absolute top-1/2 -right-4 w-8 h-0.5 bg-gradient-to-r from-transparent via-amber-400/80 to-transparent transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-300 hidden md:block"></div>
+                  <div className="absolute top-1/2 -left-4 w-8 h-0.5 bg-gradient-to-r from-transparent via-amber-400/80 to-transparent transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-300 hidden md:block"></div>
                 </div>
                 
                 {/* テキストエリア */}
                 <div className="md:w-1/2">
                   <div className="mb-4">
-                    <h3 className="text-2xl md:text-3xl font-bold mb-6 text-silver border-l-4 border-amber-400 pl-4">
+                    <h3 className="text-xl md:text-2xl lg:text-3xl font-bold mb-4 md:mb-6 text-silver border-l-4 border-amber-400 pl-3 md:pl-4">
                       {feature.title}
                     </h3>
-                    <p className="text-amber-100/80 leading-relaxed">
+                    <p className="text-amber-100/80 leading-relaxed text-sm md:text-base">
                       {feature.description}
                     </p>
                   </div>

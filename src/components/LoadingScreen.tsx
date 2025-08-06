@@ -168,12 +168,12 @@ const LoadingScreen = () => {
             </div>
 
             <div className="relative flex flex-col items-center z-10">
-              {/* PROMO AIのテキスト */}
+              {/* PROMO AIのテキスト - デスクトップ用 */}
               <motion.div
                 variants={textVariants}
                 initial="hidden"
                 animate="visible"
-                className="relative mb-12"
+                className="relative mb-12 hidden md:block"
               >
                 <svg 
                   width="500" 
@@ -214,9 +214,56 @@ const LoadingScreen = () => {
                   </motion.text>
                 </svg>
               </motion.div>
+
+              {/* PROMO AIのテキスト - スマホ用 */}
+              <motion.div
+                variants={textVariants}
+                initial="hidden"
+                animate="visible"
+                className="relative mb-8 md:hidden"
+              >
+                <svg 
+                  width="300" 
+                  height="100" 
+                  viewBox="0 0 300 100" 
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="overflow-visible"
+                >
+                  {/* SVGでテキストを描画 - 枠線 */}
+                  <text 
+                    x="50%" 
+                    y="50%" 
+                    dominantBaseline="middle" 
+                    textAnchor="middle" 
+                    className="text-4xl"
+                    stroke="white" 
+                    strokeWidth="1.5"
+                    fill="transparent"
+                    style={{ fontFamily: 'sans-serif', fontWeight: 900, letterSpacing: '0.05em' }}
+                  >
+                    PROMO AI
+                  </text>
+                  
+                  {/* 塗りつぶし部分 - アニメーション */}
+                  <motion.text 
+                    x="50%" 
+                    y="50%" 
+                    dominantBaseline="middle" 
+                    textAnchor="middle" 
+                    className="text-4xl"
+                    fill="white"
+                    variants={fillVariants}
+                    initial="hidden"
+                    animate="visible"
+                    style={{ fontFamily: 'sans-serif', fontWeight: 900, letterSpacing: '0.05em' }}
+                  >
+                    PROMO AI
+                  </motion.text>
+                </svg>
+              </motion.div>
               
-              {/* 洗練されたプログレスバー */}
-              <div className="relative w-96 mb-4">
+              {/* 洗練されたプログレスバー - デスクトップ用 */}
+              <div className="relative w-96 mb-4 hidden md:block">
                 {/* ゲージのラベル - 上中央に配置 */}
                 <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 text-white/70 text-xs font-medium tracking-widest">
                   LOADING
@@ -249,6 +296,54 @@ const LoadingScreen = () => {
                   {/* 洗練された光の点 */}
                   <motion.div 
                     className="absolute top-1/2 h-1 w-1 bg-white rounded-full -translate-y-1/2 shadow-sm shadow-white/30"
+                    animate={{ 
+                      x: ['0%', '100%'],
+                      opacity: [0, 1, 0],
+                      scale: [0.3, 1, 0.3]
+                    }}
+                    transition={{ 
+                      duration: 2,
+                      ease: "easeInOut",
+                      times: [0, 0.5, 1]
+                    }}
+                  />
+                </div>
+              </div>
+
+              {/* 洗練されたプログレスバー - スマホ用 */}
+              <div className="relative w-64 mb-4 md:hidden">
+                {/* ゲージのラベル - 上中央に配置 */}
+                <div className="absolute -top-5 left-1/2 transform -translate-x-1/2 text-white/70 text-xs font-medium tracking-widest">
+                  LOADING
+                </div>
+                
+                {/* ゲージの外枠 */}
+                <div className="relative h-3 bg-black/30 border border-white/40 rounded-full overflow-hidden backdrop-blur-sm">
+                  {/* ゲージの背景 */}
+                  <div className="absolute inset-0.5 bg-gradient-to-r from-white/5 to-white/2 rounded-full"></div>
+                  
+                  {/* メインのゲージバー */}
+                  <motion.div
+                    variants={lineVariants}
+                    initial="hidden"
+                    animate="visible"
+                    className="h-full bg-gradient-to-r from-white/90 via-white/70 to-white/90 relative overflow-hidden rounded-full"
+                  >
+                    {/* ゲージ内の光沢効果 */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-transparent via-white/20 to-transparent rounded-full"></div>
+                    
+                    {/* ゲージ内の微細なパターン */}
+                    <div className="absolute inset-0 opacity-30">
+                      <div className="h-full w-full bg-gradient-to-r from-transparent via-white/10 to-transparent animate-pulse rounded-full"></div>
+                    </div>
+                  </motion.div>
+                  
+                  {/* ゲージの境界線エフェクト */}
+                  <div className="absolute inset-0 border border-white/20 rounded-full pointer-events-none"></div>
+                  
+                  {/* 洗練された光の点 */}
+                  <motion.div 
+                    className="absolute top-1/2 h-0.5 w-0.5 bg-white rounded-full -translate-y-1/2 shadow-sm shadow-white/30"
                     animate={{ 
                       x: ['0%', '100%'],
                       opacity: [0, 1, 0],

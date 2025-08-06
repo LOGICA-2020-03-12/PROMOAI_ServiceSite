@@ -122,7 +122,9 @@ const Hero = () => {
     }
   };
 
-  const mainTitle = "生成AIを活用した動画制作";
+  // デスクトップ用とスマホ用のタイトル
+  const desktopTitle = "生成AIを活用した動画制作";
+  const mobileTitle = "生成AIを活用した\nプロモーション制作";
   const subTitle = "プロモーションの常識を変える";
 
   return (
@@ -151,8 +153,8 @@ const Hero = () => {
       <div className="container mx-auto relative z-10 flex items-center justify-center px-4">
         {/* 中央に表示するテキスト */}
         <div className="flex flex-col items-center justify-center w-full">
-          {/* メインタイトル - 文字ごとのアニメーション */}
-          <div className="overflow-hidden mb-6">
+          {/* メインタイトル - 文字ごとのアニメーション（デスクトップ） */}
+          <div className="overflow-hidden mb-6 hidden md:block">
             <motion.h1 
               className="text-4xl md:text-5xl lg:text-7xl font-bold text-white font-serif text-center"
               initial="hidden"
@@ -160,7 +162,7 @@ const Hero = () => {
               variants={textVariants}
             >
               <motion.div variants={letterVariants}>
-                {mainTitle.split('').map((char, index) => (
+                {desktopTitle.split('').map((char, index) => (
                   <motion.span
                     key={index}
                     variants={letterChildVariants}
@@ -175,9 +177,38 @@ const Hero = () => {
               </motion.div>
             </motion.h1>
           </div>
+
+          {/* メインタイトル - スマホ用 */}
+          <div className="overflow-hidden mb-6 md:hidden">
+            <motion.h1 
+              className="text-4xl font-bold text-white font-serif text-center leading-tight"
+              initial="hidden"
+              animate={loadingComplete ? "visible" : "hidden"}
+              variants={textVariants}
+            >
+              <motion.div variants={letterVariants}>
+                {mobileTitle.split('\n').map((line, lineIndex) => (
+                  <div key={lineIndex} className="mb-2">
+                    {line.split('').map((char, index) => (
+                      <motion.span
+                        key={`${lineIndex}-${index}`}
+                        variants={letterChildVariants}
+                        className="inline-block"
+                        style={{ 
+                          textShadow: '0 0 15px rgba(255,255,255,0.5)'
+                        }}
+                      >
+                        {char === ' ' ? '\u00A0' : char}
+                      </motion.span>
+                    ))}
+                  </div>
+                ))}
+              </motion.div>
+            </motion.h1>
+          </div>
           
-          {/* サブタイトル - スライドインアニメーション */}
-          <div className="overflow-hidden">
+          {/* サブタイトル - スライドインアニメーション（デスクトップのみ） */}
+          <div className="overflow-hidden hidden md:block">
             <motion.div
               initial={{ width: 0 }}
               animate={loadingComplete ? { width: '100%' } : { width: 0 }}

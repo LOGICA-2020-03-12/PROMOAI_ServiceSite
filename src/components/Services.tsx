@@ -15,9 +15,20 @@ const Services = () => {
   // カスタムカーソル用の状態
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [cursorVariant, setCursorVariant] = useState("default");
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
 
-  // マウスの位置を追跡
+  // タッチデバイスかどうかを判定
   useEffect(() => {
+    const checkTouchDevice = () => {
+      setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0);
+    };
+    checkTouchDevice();
+  }, []);
+
+  // マウスの位置を追跡（タッチデバイス以外）
+  useEffect(() => {
+    if (isTouchDevice) return;
+
     const mouseMove = (e: MouseEvent) => {
       setMousePosition({
         x: e.clientX,
@@ -30,7 +41,7 @@ const Services = () => {
     return () => {
       window.removeEventListener("mousemove", mouseMove);
     };
-  }, []);
+  }, [isTouchDevice]);
 
   // カーソルのバリアント
   const cursorVariants = {
@@ -54,9 +65,13 @@ const Services = () => {
     },
   };
 
-  // ホバー状態の変更関数
-  const enterHover = () => setCursorVariant("hover");
-  const leaveHover = () => setCursorVariant("default");
+  // ホバー状態の変更関数（タッチデバイス以外）
+  const enterHover = () => {
+    if (!isTouchDevice) setCursorVariant("hover");
+  };
+  const leaveHover = () => {
+    if (!isTouchDevice) setCursorVariant("default");
+  };
 
   // サービス一覧
   const services = [
@@ -120,7 +135,7 @@ const Services = () => {
   };
 
   return (
-    <section id="services" className="section-padding bg-dark cursor-none">
+    <section id="services" className={`section-padding bg-dark ${!isTouchDevice ? 'cursor-none' : ''}`}>
       <div className="container-custom relative">
         <div className="flex flex-col items-start mb-16">
           <div className="flex items-center mb-6">
@@ -218,33 +233,37 @@ const Services = () => {
         </motion.div>
       </div>
 
-      {/* カスタムカーソル */}
-      <motion.div
-        className="custom-cursor fixed top-0 left-0 w-8 h-8 rounded-full pointer-events-none z-50"
-        variants={cursorVariants}
-        animate={cursorVariant}
-        transition={{
-          type: "spring",
-          stiffness: 500,
-          damping: 28,
-          mass: 0.5,
-        }}
-      />
-     
-      {/* カーソルの内側の点 */}
-      <motion.div
-        className="fixed w-1.5 h-1.5 bg-white rounded-full pointer-events-none z-50"
-        style={{
-          x: mousePosition.x - 0.75,
-          y: mousePosition.y - 0.75,
-        }}
-        transition={{
-          type: "spring",
-          stiffness: 800,
-          damping: 25,
-          mass: 0.2,
-        }}
-      />
+      {/* カスタムカーソル（タッチデバイス以外） */}
+      {!isTouchDevice && (
+        <>
+          <motion.div
+            className="custom-cursor fixed top-0 left-0 w-8 h-8 rounded-full pointer-events-none z-50"
+            variants={cursorVariants}
+            animate={cursorVariant}
+            transition={{
+              type: "spring",
+              stiffness: 500,
+              damping: 28,
+              mass: 0.5,
+            }}
+          />
+         
+          {/* カーソルの内側の点 */}
+          <motion.div
+            className="fixed w-1.5 h-1.5 bg-white rounded-full pointer-events-none z-50"
+            style={{
+              x: mousePosition.x - 0.75,
+              y: mousePosition.y - 0.75,
+            }}
+            transition={{
+              type: "spring",
+              stiffness: 800,
+              damping: 25,
+              mass: 0.2,
+            }}
+          />
+        </>
+      )}
     </section>
   );
 };
