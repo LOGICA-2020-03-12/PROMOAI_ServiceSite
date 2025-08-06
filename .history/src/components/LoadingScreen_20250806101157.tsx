@@ -67,8 +67,8 @@ const LoadingScreen = () => {
     visible: { 
       fillOpacity: 1,
       transition: { 
-        delay: 0.4,
-        duration: 0.8,
+        delay: 0.8,
+        duration: 1.2,
         ease: "easeInOut"
       }
     },
@@ -83,7 +83,7 @@ const LoadingScreen = () => {
     hidden: { width: 0 },
     visible: { 
       width: "100%",
-      transition: { duration: 1.2, ease: [0.43, 0.13, 0.23, 0.96] }
+      transition: { duration: 2, ease: [0.43, 0.13, 0.23, 0.96] }
     },
     exit: {
       width: 0,
@@ -97,7 +97,7 @@ const LoadingScreen = () => {
     visible: { 
       opacity: 0.15,
       transition: { 
-        duration: 1.2,
+        duration: 2,
         ease: "easeOut"
       }
     },

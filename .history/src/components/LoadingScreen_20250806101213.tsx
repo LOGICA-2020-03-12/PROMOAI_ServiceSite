@@ -97,7 +97,7 @@ const LoadingScreen = () => {
     visible: { 
       opacity: 0.15,
       transition: { 
-        duration: 1.2,
+        duration: 2,
         ease: "easeOut"
       }
     },
