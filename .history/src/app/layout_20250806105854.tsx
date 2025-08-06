@@ -37,9 +37,7 @@ export default function RootLayout({
         <GoogleTagManager gtmId={gtmId} />
       </head>
       <body className="antialiased">
-        <Suspense fallback={null}>
-          <Analytics />
-        </Suspense>
+        <Analytics />
         <LoadingScreen />
         {children}
       </body>
