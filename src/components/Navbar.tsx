@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { FiMenu, FiX, FiArrowRight } from "react-icons/fi";
+import { FiX, FiArrowRight } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
 
 const Navbar = () => {
@@ -44,8 +44,7 @@ const Navbar = () => {
       opacity: 0,
       x: "100%",
       transition: {
-        duration: 0.3,
-        ease: "easeInOut"
+        duration: 0.3
       }
     },
     open: {
@@ -53,7 +52,6 @@ const Navbar = () => {
       x: 0,
       transition: {
         duration: 0.4,
-        ease: "easeOut",
         staggerChildren: 0.1,
         delayChildren: 0.2
       }
@@ -72,8 +70,7 @@ const Navbar = () => {
       opacity: 1,
       x: 0,
       transition: {
-        duration: 0.3,
-        ease: "easeOut"
+        duration: 0.3
       }
     }
   };
@@ -180,7 +177,7 @@ const Navbar = () => {
 
                 {/* Navigation Links */}
                 <div className="space-y-6 mb-12">
-                  {navLinks.map((link, index) => (
+                  {navLinks.map((link) => (
                     <motion.div
                       key={link.name}
                       variants={itemVariants}

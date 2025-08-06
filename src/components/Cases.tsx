@@ -230,7 +230,11 @@ const Cases = () => {
                 className={`block ${caseItem.isComingSoon ? 'cursor-not-allowed' : 'cursor-pointer'}`}
                 onClick={() => {
                   if (caseItem.isComingSoon) return;
-                  caseItem.youtubeId ? openVideoModal(caseItem.youtubeId, caseItem.title) : window.open(caseItem.url, '_blank');
+                  if (caseItem.youtubeId) {
+                    openVideoModal(caseItem.youtubeId, caseItem.title);
+                  } else {
+                    window.open(caseItem.url, '_blank');
+                  }
                 }}
               >
                 <div className={`relative overflow-hidden aspect-video mb-4 bg-gray-800 border border-gray-700 rounded-lg transition-transform duration-300 ${caseItem.isComingSoon ? '' : 'group-hover:scale-105'}`}>
