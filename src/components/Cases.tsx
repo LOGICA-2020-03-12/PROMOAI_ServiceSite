@@ -80,6 +80,7 @@ const Cases = () => {
       image: "/images/焼酎サムネ.jpg",
       youtubeId: "y5l5AAZ1K0s",
       url: "https://www.youtube.com/embed/y5l5AAZ1K0s?si=UBePoPjltcdGt0Ox",
+      isComingSoon: false,
     },
     {
       id: 2,
@@ -87,6 +88,7 @@ const Cases = () => {
       image: "/images/たこ焼きサムネ.jpg",
       youtubeId: "9L3YryxS--0",
       url: "https://www.youtube.com/embed/9L3YryxS--0?si=GbCwGZKvwlX_iV1o",
+      isComingSoon: false,
     },
     {
       id: 3,
@@ -94,6 +96,7 @@ const Cases = () => {
       image: "/images/観光CMサムネ.jpg",
       youtubeId: "t-xSCpDuS7Q",
       url: "https://www.youtube.com/embed/t-xSCpDuS7Q?si=yjM5cWpC3sKfVVd0",
+      isComingSoon: false,
     },
     {
       id: 4,
@@ -101,6 +104,7 @@ const Cases = () => {
       image: "/images/ハイブランドサムネ.jpg",
       youtubeId: null, // 準備中
       url: "#",
+      isComingSoon: true,
     },
     {
       id: 5,
@@ -108,6 +112,7 @@ const Cases = () => {
       image: "/images/ラーメン屋サムネ.jpg",
       youtubeId: "_o2I4iOlQ6c",
       url: "https://www.youtube.com/embed/_o2I4iOlQ6c?si=zA-2KEKnC-4tEod9",
+      isComingSoon: false,
     },
     {
       id: 6,
@@ -115,6 +120,7 @@ const Cases = () => {
       image: "/images/メガネ広告サムネ.jpg",
       youtubeId: "JvIS15t1FC0",
       url: "https://www.youtube.com/embed/JvIS15t1FC0?si=nqUDyiMjADwIYdjc",
+      isComingSoon: false,
     },
   ];
 
@@ -220,20 +226,31 @@ const Cases = () => {
               onMouseLeave={leaveHover}
             >
               <div 
-                className="block cursor-pointer"
-                onClick={() => caseItem.youtubeId ? openVideoModal(caseItem.youtubeId, caseItem.title) : window.open(caseItem.url, '_blank')}
+                className={`block ${caseItem.isComingSoon ? 'cursor-not-allowed' : 'cursor-pointer'}`}
+                onClick={() => {
+                  if (caseItem.isComingSoon) return;
+                  caseItem.youtubeId ? openVideoModal(caseItem.youtubeId, caseItem.title) : window.open(caseItem.url, '_blank');
+                }}
               >
-                <div className="relative overflow-hidden aspect-video mb-4 bg-gray-800 border border-gray-700 rounded-lg group-hover:scale-105 transition-transform duration-300">
+                <div className={`relative overflow-hidden aspect-video mb-4 bg-gray-800 border border-gray-700 rounded-lg transition-transform duration-300 ${caseItem.isComingSoon ? '' : 'group-hover:scale-105'}`}>
                   <Image
                     src={caseItem.image}
                     alt={caseItem.title}
                     fill
                     className="object-cover"
                   />
+                  {/* 準備中のオーバーレイ */}
+                  {caseItem.isComingSoon && (
+                    <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
+                      <div className="text-white text-lg font-bold bg-black/50 px-4 py-2 rounded-lg">
+                        準備中
+                      </div>
+                    </div>
+                  )}
                   {/* ホバー時のオーバーレイ */}
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
                     <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-white text-sm font-medium">
-                      {caseItem.youtubeId ? "動画を見る" : "詳細を見る"}
+                      {caseItem.isComingSoon ? "準備中" : caseItem.youtubeId ? "動画を見る" : "詳細を見る"}
                     </div>
                   </div>
                 </div>
