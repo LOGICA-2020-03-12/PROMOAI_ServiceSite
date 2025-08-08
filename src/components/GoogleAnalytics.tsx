@@ -2,15 +2,11 @@
 
 import Script from 'next/script';
 
-interface GA4Props {
-  measurementId: string;
-}
-
-export default function GoogleAnalytics({ measurementId }: GA4Props) {
+export default function GoogleAnalytics() {
   return (
     <>
       <Script
-        src={`https://www.googletagmanager.com/gtag/js?id=${measurementId}`}
+        src="https://www.googletagmanager.com/gtag/js?id=G-PW0CFS9G6S"
         strategy="afterInteractive"
       />
       <Script id="google-analytics" strategy="afterInteractive">
@@ -18,7 +14,7 @@ export default function GoogleAnalytics({ measurementId }: GA4Props) {
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
-          gtag('config', '${measurementId}');
+          gtag('config', 'G-PW0CFS9G6S');
         `}
       </Script>
     </>

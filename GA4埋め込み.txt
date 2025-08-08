@@ -72,120 +72,32 @@
 
 ## 4. Next.jsプロジェクトでの実装
 
-### Step 1: GA4コンポーネントの作成
-1. `src/components/` ディレクトリに `GoogleAnalytics.tsx` ファイルを作成
-2. 以下のコードを追加：
+### Step 1: 測定IDの設定
+1. GA4で取得した測定ID（G-XXXXXXXXXX）を以下のファイルで置き換えてください：
 
+**GoogleAnalytics.tsx**:
 ```tsx
-'use client';
+// src/components/GoogleAnalytics.tsx の以下の部分を変更
+src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"
+// と
+gtag('config', 'G-XXXXXXXXXX');
+```
 
-import Script from 'next/script';
-
-export default function GoogleAnalytics() {
-  return (
-    <>
-      <Script
-        src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"
-        strategy="afterInteractive"
-      />
-      <Script id="google-analytics" strategy="afterInteractive">
-        {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-XXXXXXXXXX');
-        `}
-      </Script>
-    </>
-  );
-}
+**PageViewTracker.tsx**:
+```tsx
+// src/components/PageViewTracker.tsx の以下の部分を変更
+window.gtag('config', 'G-XXXXXXXXXX', {
 ```
 
 ※ G-XXXXXXXXXXは実際の測定IDに置き換えてください
 
-### Step 2: レイアウトファイルの更新
-1. `src/app/layout.tsx` ファイルを開く
-2. 以下のように更新：
+### Step 2: 実装状況の確認
+現在のプロジェクトには以下のコンポーネントが既に実装されています：
+- ✅ `GoogleAnalytics.tsx` - GA4タグ埋め込み用
+- ✅ `PageViewTracker.tsx` - ページビュー追跡用
+- ✅ `layout.tsx` - レイアウトファイル（既に統合済み）
 
-```tsx
-import GoogleAnalytics from '@/components/GoogleAnalytics';
-
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  return (
-    <html lang="ja">
-      <head>
-        <GoogleAnalytics />
-      </head>
-      <body>
-        {children}
-      </body>
-    </html>
-  );
-}
-```
-
-### Step 3: ページビュー追跡の追加（オプション）
-1. `src/components/` ディレクトリに `PageViewTracker.tsx` ファイルを作成
-2. 以下のコードを追加：
-
-```tsx
-'use client';
-
-import { usePathname, useSearchParams } from 'next/navigation';
-import { useEffect } from 'react';
-
-declare global {
-  interface Window {
-    gtag: (...args: any[]) => void;
-  }
-}
-
-export default function PageViewTracker() {
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-
-  useEffect(() => {
-    if (pathname && window.gtag) {
-      window.gtag('config', 'G-XXXXXXXXXX', {
-        page_path: pathname,
-      });
-    }
-  }, [pathname, searchParams]);
-
-  return null;
-}
-```
-
-※ G-XXXXXXXXXXは実際の測定IDに置き換えてください
-
-3. `layout.tsx` にPageViewTrackerコンポーネントを追加：
-
-```tsx
-import GoogleAnalytics from '@/components/GoogleAnalytics';
-import PageViewTracker from '@/components/PageViewTracker';
-
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  return (
-    <html lang="ja">
-      <head>
-        <GoogleAnalytics />
-      </head>
-      <body>
-        <PageViewTracker />
-        {children}
-      </body>
-    </html>
-  );
-}
-```
+測定IDを設定すれば、すぐに動作確認ができます。
 
 ---
 
@@ -271,8 +183,8 @@ window.gtag('event', 'file_download', {
 ## 完了チェックリスト
 
 - [ ] GA4プロパティ・データストリームの作成
-- [ ] 環境変数の設定
-- [ ] GA4コンポーネントの実装
+- [ ] 測定IDの取得
+- [ ] GA4コンポーネントの実装（測定IDを置き換え）
 - [ ] レイアウトファイルの更新
 - [ ] ローカル環境でのテスト
 - [ ] 本番環境でのテスト

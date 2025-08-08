@@ -15,7 +15,7 @@ export default function PageViewTracker() {
 
   useEffect(() => {
     if (pathname && window.gtag) {
-      window.gtag('config', process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID, {
+      window.gtag('config', 'G-PW0CFS9G6S', {
         page_path: pathname,
       });
     }

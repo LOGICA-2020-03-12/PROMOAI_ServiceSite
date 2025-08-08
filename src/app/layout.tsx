@@ -29,12 +29,10 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const measurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || '';
-
   return (
     <html lang="ja" className={`scroll-smooth ${inter.variable} ${poppins.variable}`}>
       <head>
-        <GoogleAnalytics measurementId={measurementId} />
+        <GoogleAnalytics />
       </head>
       <body className="antialiased">
         <Suspense fallback={null}>

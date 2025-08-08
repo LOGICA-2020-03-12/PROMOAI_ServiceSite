@@ -12,51 +12,7 @@ export default function DXAIConsultingPage() {
     threshold: 0.1,
   });
 
-  // カスタムカーソル用の状態
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [cursorVariant, setCursorVariant] = useState("default");
 
-  // マウスの位置を追跡
-  useEffect(() => {
-    const mouseMove = (e: MouseEvent) => {
-      setMousePosition({
-        x: e.clientX,
-        y: e.clientY,
-      });
-    };
-
-    window.addEventListener("mousemove", mouseMove);
-
-    return () => {
-      window.removeEventListener("mousemove", mouseMove);
-    };
-  }, []);
-
-  // カーソルのバリアント
-  const cursorVariants = {
-    default: {
-      x: mousePosition.x - 16,
-      y: mousePosition.y - 16,
-      backgroundColor: "transparent",
-      boxShadow: "0 0 15px rgba(255, 255, 255, 0.3), inset 0 0 10px rgba(255, 255, 255, 0.2)",
-      border: "1.5px solid rgba(255, 255, 255, 0.6)",
-      scale: 1,
-    },
-    hover: {
-      x: mousePosition.x - 30,
-      y: mousePosition.y - 30,
-      height: 60,
-      width: 60,
-      backgroundColor: "rgba(255, 255, 255, 0.03)",
-      boxShadow: "0 0 20px rgba(255, 255, 255, 0.4), inset 0 0 15px rgba(255, 255, 255, 0.1)",
-      border: "1.5px solid rgba(255, 255, 255, 0.8)",
-      scale: 1.05,
-    },
-  };
-
-  // ホバー状態の変更関数
-  const enterHover = () => setCursorVariant("hover");
-  const leaveHover = () => setCursorVariant("default");
 
   // サービス特徴
   const features = [
@@ -132,8 +88,7 @@ export default function DXAIConsultingPage() {
             <Link 
               href="/#services" 
               className="inline-flex items-center text-white hover:text-gray-300 transition-colors duration-300"
-              onMouseEnter={enterHover}
-              onMouseLeave={leaveHover}
+              
             >
               <FiArrowLeft className="mr-2" />
               <span>サービス一覧に戻る</span>
@@ -159,8 +114,6 @@ export default function DXAIConsultingPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-3xl md:text-7xl font-bold tracking-tight mb-6"
-            onMouseEnter={enterHover}
-            onMouseLeave={leaveHover}
           >
             <span className="hidden md:inline">DX推進／AIコンサル</span>
             <span className="md:hidden">
@@ -233,8 +186,6 @@ export default function DXAIConsultingPage() {
                 animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 className="bg-white/5 backdrop-blur-sm rounded-lg p-6 border border-white/10 hover:border-white/30 transition-all duration-300 flex items-center justify-center min-h-[120px]"
-                onMouseEnter={enterHover}
-                onMouseLeave={leaveHover}
               >
                 <div className="text-center">
                   <h3 className="text-white font-semibold leading-relaxed">{feature}</h3>
@@ -274,8 +225,6 @@ export default function DXAIConsultingPage() {
                 animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 className="bg-white/5 backdrop-blur-sm rounded-lg p-6 border border-white/10 hover:border-white/30 transition-all duration-300 text-center"
-                onMouseEnter={enterHover}
-                onMouseLeave={leaveHover}
               >
                 <div className={`w-16 h-16 bg-gradient-to-r ${area.color} rounded-full flex items-center justify-center mx-auto mb-4`}>
                   <area.icon className="text-white text-2xl" />
@@ -303,8 +252,6 @@ export default function DXAIConsultingPage() {
               <Link
                 href="/contact"
                 className="inline-flex items-center px-12 py-6 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-bold text-2xl rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
-                onMouseEnter={enterHover}
-                onMouseLeave={leaveHover}
               >
                 無料相談する
                 <svg className="ml-3 w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -319,33 +266,7 @@ export default function DXAIConsultingPage() {
         </div>
       </section>
 
-      {/* カスタムカーソル */}
-      <motion.div
-        className="custom-cursor fixed top-0 left-0 w-8 h-8 rounded-full pointer-events-none z-50"
-        variants={cursorVariants}
-        animate={cursorVariant}
-        transition={{
-          type: "spring",
-          stiffness: 500,
-          damping: 28,
-          mass: 0.5,
-        }}
-      />
-     
-      {/* カーソルの内側の点 */}
-      <motion.div
-        className="fixed w-1.5 h-1.5 bg-white rounded-full pointer-events-none z-50"
-        style={{
-          x: mousePosition.x - 0.75,
-          y: mousePosition.y - 0.75,
-        }}
-        transition={{
-          type: "spring",
-          stiffness: 800,
-          damping: 25,
-          mass: 0.2,
-        }}
-      />
+
     </main>
   );
 } 
