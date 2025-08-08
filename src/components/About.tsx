@@ -73,6 +73,7 @@ const About = () => {
       icon: <FiZap className="text-amber-300 text-3xl" />,
       title: "低予算で動画を作りたい",
       description: "限られた予算でも高品質な動画制作を実現します。PROMO AIでは、AIによる自動生成技術と人間のクリエイティブディレクションを最適に組み合わせることで、コストを大幅に削減。従来の制作フローでは高額な費用がかかっていた工程の多くを効率化し、予算を抑えながらもプロフェッショナルな品質の映像コンテンツを提供します。企業規模や予算に関わらず、魅力的な動画マーケティングを実現できるソリューションです。",
+      mobileDescription: "AI技術と人間のクリエイティブを組み合わせて、コストを大幅削減。予算を抑えながらプロ品質の動画制作を実現。",
       imageAlt: "低コスト動画制作の図",
       imageSrc: "/images/About_1.jpg",
       ref: ref1,
@@ -83,6 +84,7 @@ const About = () => {
       icon: <FiCpu className="text-amber-300 text-3xl" />,
       title: "短期間で動画を作りたい",
       description: "従来の数週間〜数ヶ月かかる動画制作プロセスを、わずか数日で完成させます。PROMO AIのシステムでは、コンセプト立案からスクリプト作成、映像生成、編集までの工程を最適化。AIによる高速なコンテンツ生成と、熟練したプロによる効率的なディレクションにより、スピーディーな制作サイクルを実現しています。急なプロモーション要件や、タイムリーなコンテンツ配信が必要な場面でも、品質を犠牲にすることなく短納期で対応可能です。",
+      mobileDescription: "数週間〜数ヶ月の制作期間を数日に短縮。AIによる高速生成とプロのディレクションで短納期対応。",
       imageAlt: "短納期動画制作の図",
       imageSrc: "/images/About_2.jpg",
       ref: ref2,
@@ -93,6 +95,7 @@ const About = () => {
       icon: <FiUsers className="text-amber-300 text-3xl" />,
       title: "新しい表現を試したい",
       description: "最先端のAI技術と創造性豊かなクリエイターの知見を組み合わせ、革新的な映像表現を実現します。常に進化するAI映像生成技術を活用することで、従来の制作手法では難しかった表現や、コスト面で断念していた演出も可能に。さらに、業界経験豊富なクリエイターが最新のトレンドやテクニックを取り入れながら、ブランドの個性を活かした独自性のある映像制作をサポートします。他社と差別化できる、印象に残るコンテンツで視聴者の心を掴みます。",
+      mobileDescription: "最先端AI技術とクリエイターの知見で革新的表現を実現。従来不可能だった演出も可能に。",
       imageAlt: "革新的表現技術の図",
       imageSrc: "/images/About_3.jpg",
       ref: ref3,
@@ -319,11 +322,11 @@ const About = () => {
                 variants={itemVariants}
                 initial="hidden"
                 animate={feature.inView ? "visible" : "hidden"}
-                className={`flex flex-col ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} gap-4 md:gap-16`}
+                className={`flex flex-col ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} gap-4 md:gap-16 h-auto`}
 
               >
                 {/* 画像エリア */}
-                <div className="md:w-1/2 relative rounded-xl group">
+                <div className="md:w-1/2 relative rounded-xl group flex-shrink-0">
                   {/* 番号表示 - 画像の上部に配置（スマホ時は非表示） */}
                   <div className="absolute -top-6 -left-6 md:-top-8 md:-left-8 z-30 hidden md:block">
                     <div className="relative">
@@ -389,8 +392,8 @@ const About = () => {
                 </div>
                 
                 {/* テキストエリア */}
-                <div className="md:w-1/2">
-                  <div className="mb-4">
+                <div className="md:w-1/2 flex-shrink-0">
+                  <div className="mb-4 h-auto">
                     {/* スマホ用の番号表示 */}
                     <div className="flex items-center mb-3 md:hidden">
                       <span className="text-2xl font-black text-amber-500/60 mr-3">{feature.number}</span>
@@ -400,8 +403,9 @@ const About = () => {
                     <h3 className="text-lg md:text-2xl lg:text-3xl font-bold mb-3 md:mb-6 text-silver border-l-4 border-amber-400 pl-3 md:pl-4">
                       {feature.title}
                     </h3>
-                    <p className="text-amber-100/80 leading-relaxed text-sm md:text-base line-clamp-4 md:line-clamp-none">
-                      {feature.description}
+                    <p className="text-amber-100/80 leading-relaxed text-sm md:text-base overflow-visible whitespace-normal">
+                      <span className="hidden md:inline">{feature.description}</span>
+                      <span className="md:hidden">{feature.mobileDescription}</span>
                     </p>
                   </div>
                 </div>

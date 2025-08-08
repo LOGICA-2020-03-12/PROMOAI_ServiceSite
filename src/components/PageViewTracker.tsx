@@ -1,16 +1,17 @@
 'use client';
 
-import { usePathname } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 
 declare global {
   interface Window {
-    gtag: (...args: unknown[]) => void;
+    gtag: (...args: any[]) => void;
   }
 }
 
-export default function Analytics() {
+export default function PageViewTracker() {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   useEffect(() => {
     if (pathname && window.gtag) {
@@ -18,7 +19,7 @@ export default function Analytics() {
         page_path: pathname,
       });
     }
-  }, [pathname]);
+  }, [pathname, searchParams]);
 
   return null;
-} 
+}

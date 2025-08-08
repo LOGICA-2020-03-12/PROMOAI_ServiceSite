@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
 import LoadingScreen from "@/components/LoadingScreen";
-import GoogleTagManager from "@/components/GoogleTagManager";
-import Analytics from "@/components/Analytics";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
+import PageViewTracker from "@/components/PageViewTracker";
 import { Suspense } from "react";
 
 const inter = Inter({ 
@@ -29,16 +29,16 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const gtmId = process.env.NEXT_PUBLIC_GTM_ID || '';
+  const measurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || '';
 
   return (
     <html lang="ja" className={`scroll-smooth ${inter.variable} ${poppins.variable}`}>
       <head>
-        <GoogleTagManager gtmId={gtmId} />
+        <GoogleAnalytics measurementId={measurementId} />
       </head>
       <body className="antialiased">
         <Suspense fallback={null}>
-          <Analytics />
+          <PageViewTracker />
         </Suspense>
         <LoadingScreen />
         {children}
