@@ -31,10 +31,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja" className={`scroll-smooth ${inter.variable} ${poppins.variable}`}>
-      <head>
-        <GoogleAnalytics />
-      </head>
       <body className="antialiased">
+        <GoogleAnalytics />
         <Suspense fallback={null}>
           <PageViewTracker />
         </Suspense>
