@@ -423,32 +423,13 @@ const About = () => {
             </h2>
           </div>
 
-          {/* スマホ用スクロールインジケーター */}
-          <div className="md:hidden mb-4 flex items-center justify-center">
-            <div className="flex items-center space-x-2 bg-blue-950/50 backdrop-blur-sm rounded-full px-4 py-2 border border-blue-400/30">
-              <svg className="w-4 h-4 text-blue-300 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16l-4-4m0 0l4-4m-4 4h18" />
-              </svg>
-              <span className="text-blue-200 text-sm font-medium">横スクロールで詳細を確認</span>
-              <svg className="w-4 h-4 text-blue-300 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </div>
-          </div>
-
-          {/* スクロール可能なコンテナ */}
-          <div className="overflow-x-auto md:overflow-visible">
-            {/* スクロールグラデーション効果（スマホのみ） */}
-            <div className="md:hidden relative">
-              <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-zinc-900 to-transparent z-10 pointer-events-none"></div>
-              <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-zinc-900 to-transparent z-10 pointer-events-none"></div>
-            </div>
-
+          {/* デスクトップ用の表 */}
+          <div className="hidden md:block overflow-x-auto">
             <motion.table
               variants={containerVariants}
               initial="hidden"
               animate="visible"
-              className="w-full border-collapse rounded-xl overflow-hidden shadow-2xl min-w-[600px] md:min-w-0"
+              className="w-full border-collapse"
             >
               <thead>
                 <tr className="bg-gradient-to-r from-blue-950 via-blue-950 to-blue-950 border-b border-gray-700">
@@ -477,12 +458,31 @@ const About = () => {
             </motion.table>
           </div>
 
-          {/* スマホ用スクロール完了インジケーター */}
-          <div className="md:hidden mt-4 flex items-center justify-center">
-            <div className="flex items-center space-x-2 text-gray-400 text-xs">
-              <div className="w-2 h-2 bg-blue-400 rounded-full animate-ping"></div>
-              <span>表を横スクロールして全ての項目を確認できます</span>
-            </div>
+          {/* スマホ用のカード形式 */}
+          <div className="md:hidden space-y-6">
+            {comparisonData.map((row, index) => (
+              <motion.div
+                key={index}
+                variants={compareItemVariants}
+                initial="hidden"
+                animate="visible"
+                className="bg-blue-950/30 backdrop-blur-sm rounded-xl border border-gray-600/40 p-6 shadow-lg"
+              >
+                <div className="mb-4">
+                  <h3 className="text-amber-300 font-bold text-xl mb-3 border-b border-amber-500/30 pb-2">{row.item}</h3>
+                </div>
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between p-4 bg-gray-800/40 rounded-lg border border-gray-500/30">
+                    <span className="text-gray-300 text-base font-medium">従来の動画制作</span>
+                    <span className="text-gray-400 font-semibold text-lg">{row.traditional}</span>
+                  </div>
+                  <div className="flex items-center justify-between p-4 bg-amber-900/30 rounded-lg border border-amber-400/40 shadow-sm">
+                    <span className="text-amber-200 text-base font-bold">PROMO AI</span>
+                    <span className="text-amber-300 font-bold text-lg">{row.promoAi}</span>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
           </div>
 
           <div className="mt-10 p-6 bg-black/50 backdrop-blur-sm rounded-lg border-l-4 border-amber-400/70">
@@ -524,7 +524,9 @@ const About = () => {
                       <span className="text-xs font-medium text-amber-500 ml-2 px-2 py-1 border border-amber-500/30 rounded-full">オプション</span>
                     )}
                   </div>
-
+                  <div className="mb-5 flex justify-center">
+                    <Icon />
+                  </div>
                   <h3 className="text-xl font-bold mb-3 text-amber-100">{step.title}</h3>
                   <p className="text-amber-100/70 text-sm hidden md:block">{step.description}</p>
                   <p className="text-amber-100/70 text-sm md:hidden">{step.mobileDescription}</p>

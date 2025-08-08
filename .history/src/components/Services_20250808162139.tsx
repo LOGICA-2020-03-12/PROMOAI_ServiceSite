@@ -94,6 +94,8 @@ const Services = () => {
           >
             <h2 
               className="text-3xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white"
+              onMouseEnter={enterHover}
+              onMouseLeave={leaveHover}
             >
               サービス概要
             </h2>
@@ -140,6 +142,8 @@ const Services = () => {
               key={service.id}
               variants={itemVariants}
               className="bg-primary/30 backdrop-blur-sm rounded-lg overflow-hidden border border-white/10 hover:border-white/30 transition-all duration-300"
+              onMouseEnter={enterHover}
+              onMouseLeave={leaveHover}
             >
               {/* サムネイル画像エリア */}
               <div className="w-full aspect-[2/1] relative bg-gray-800 overflow-hidden">

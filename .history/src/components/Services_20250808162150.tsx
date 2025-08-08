@@ -94,6 +94,8 @@ const Services = () => {
           >
             <h2 
               className="text-3xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white"
+              onMouseEnter={enterHover}
+              onMouseLeave={leaveHover}
             >
               サービス概要
             </h2>

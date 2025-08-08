@@ -94,6 +94,8 @@ const Services = () => {
           >
             <h2 
               className="text-3xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white"
+              onMouseEnter={enterHover}
+              onMouseLeave={leaveHover}
             >
               サービス概要
             </h2>
@@ -140,6 +142,8 @@ const Services = () => {
               key={service.id}
               variants={itemVariants}
               className="bg-primary/30 backdrop-blur-sm rounded-lg overflow-hidden border border-white/10 hover:border-white/30 transition-all duration-300"
+              onMouseEnter={enterHover}
+              onMouseLeave={leaveHover}
             >
               {/* サムネイル画像エリア */}
               <div className="w-full aspect-[2/1] relative bg-gray-800 overflow-hidden">
@@ -171,7 +175,37 @@ const Services = () => {
         </motion.div>
       </div>
 
-
+      {/* カスタムカーソル（タッチデバイス以外） */}
+      {!isTouchDevice && (
+        <>
+          <motion.div
+            className="custom-cursor fixed top-0 left-0 w-8 h-8 rounded-full pointer-events-none z-50"
+            variants={cursorVariants}
+            animate={cursorVariant}
+            transition={{
+              type: "spring",
+              stiffness: 500,
+              damping: 28,
+              mass: 0.5,
+            }}
+          />
+         
+          {/* カーソルの内側の点 */}
+          <motion.div
+            className="fixed w-1.5 h-1.5 bg-white rounded-full pointer-events-none z-50"
+            style={{
+              x: mousePosition.x - 0.75,
+              y: mousePosition.y - 0.75,
+            }}
+            transition={{
+              type: "spring",
+              stiffness: 800,
+              damping: 25,
+              mass: 0.2,
+            }}
+          />
+        </>
+      )}
     </section>
   );
 };

@@ -130,6 +130,8 @@ const Cases = () => {
           >
             <h2 
               className="text-3xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white"
+              onMouseEnter={enterHover}
+              onMouseLeave={leaveHover}
             >
               制作事例
             </h2>
@@ -175,7 +177,8 @@ const Cases = () => {
               key={caseItem.id}
               variants={itemVariants}
               className="group"
-
+              onMouseEnter={enterHover}
+              onMouseLeave={leaveHover}
             >
               <div 
                 className={`block ${caseItem.isComingSoon ? 'cursor-not-allowed' : 'cursor-pointer'}`}
@@ -217,7 +220,33 @@ const Cases = () => {
         </motion.div>
       </div>
 
-
+      {/* カスタムカーソル */}
+      <motion.div
+        className="custom-cursor fixed top-0 left-0 w-8 h-8 rounded-full pointer-events-none z-50"
+        variants={cursorVariants}
+        animate={cursorVariant}
+        transition={{
+          type: "spring",
+          stiffness: 500,
+          damping: 28,
+          mass: 0.5,
+        }}
+      />
+     
+      {/* カーソルの内側の点 */}
+      <motion.div
+        className="fixed w-1.5 h-1.5 bg-white rounded-full pointer-events-none z-50"
+        style={{
+          x: mousePosition.x - 0.75,
+          y: mousePosition.y - 0.75,
+        }}
+        transition={{
+          type: "spring",
+          stiffness: 800,
+          damping: 25,
+          mass: 0.2,
+        }}
+      />
 
       {/* 動画モーダル */}
       {isModalOpen && selectedVideo && (

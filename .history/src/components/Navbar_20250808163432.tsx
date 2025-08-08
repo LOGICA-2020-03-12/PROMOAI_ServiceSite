@@ -167,7 +167,13 @@ const Navbar = () => {
             {/* Menu Content */}
             <div className="relative z-10 h-full flex flex-col justify-center">
               <div className="container-custom px-4">
-
+                {/* Logo in Menu */}
+                <motion.div
+                  variants={itemVariants}
+                  className="mb-8 text-center"
+                >
+                  <span className="text-2xl font-display font-bold text-secondary tracking-tight">PROMO AI</span>
+                </motion.div>
 
                 {/* Navigation Links */}
                 <div className="space-y-4 mb-8">
@@ -218,11 +224,26 @@ const Navbar = () => {
                   </Link>
                 </motion.div>
 
-
+                {/* Footer Info */}
+                <motion.div
+                  variants={itemVariants}
+                  className="mt-8 text-center text-gray-500 text-xs"
+                >
+                  <p>AIを活用した動画制作サービス</p>
+                  <p className="mt-1">プロモーションの常識を変える</p>
+                </motion.div>
               </div>
             </div>
 
-
+            {/* Close Button */}
+            <motion.button
+              variants={itemVariants}
+              className="absolute top-8 right-6 text-white hover:text-secondary transition-colors duration-300"
+              onClick={() => setIsOpen(false)}
+              aria-label="Close menu"
+            >
+              <FiX size={28} />
+            </motion.button>
           </motion.div>
         )}
       </AnimatePresence>

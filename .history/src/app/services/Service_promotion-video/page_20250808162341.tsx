@@ -59,7 +59,7 @@ export default function PromotionVideoPage() {
   ];
 
   return (
-    <main className="bg-[#1a1a1a]">
+    <main className="bg-[#1a1a1a] cursor-none">
       {/* ヘッダーセクション */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
         {/* 背景画像 */}
@@ -80,7 +80,8 @@ export default function PromotionVideoPage() {
             <Link 
               href="/#services" 
               className="inline-flex items-center text-white hover:text-gray-300 transition-colors duration-300"
-
+              onMouseEnter={enterHover}
+              onMouseLeave={leaveHover}
             >
               <FiArrowLeft className="mr-2" />
               <span>サービス一覧に戻る</span>
@@ -106,6 +107,8 @@ export default function PromotionVideoPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-3xl md:text-7xl font-bold tracking-tight mb-6"
+            onMouseEnter={enterHover}
+            onMouseLeave={leaveHover}
           >
             <span className="hidden md:inline">広告用のプロモーション動画制作</span>
             <span className="md:hidden">
@@ -178,6 +181,8 @@ export default function PromotionVideoPage() {
                 animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 className="bg-white/5 backdrop-blur-sm rounded-lg p-6 border border-white/10 hover:border-white/30 transition-all duration-300 flex items-center justify-center min-h-[120px]"
+                onMouseEnter={enterHover}
+                onMouseLeave={leaveHover}
               >
                 <div className="text-center">
                   <h3 className="text-white font-semibold leading-relaxed">{feature}</h3>
@@ -217,6 +222,8 @@ export default function PromotionVideoPage() {
                 animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
                 transition={{ duration: 0.8, delay: index * 0.2 }}
                 className={`flex flex-col ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} items-center gap-8`}
+                onMouseEnter={enterHover}
+                onMouseLeave={leaveHover}
               >
                 <div className="flex-1">
                   <div className="flex items-center mb-4">
@@ -266,6 +273,8 @@ export default function PromotionVideoPage() {
               <Link
                 href="/estimate"
                 className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-bold text-lg rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                onMouseEnter={enterHover}
+                onMouseLeave={leaveHover}
               >
                 見積もりシミュレーター
                 <svg className="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -280,7 +289,33 @@ export default function PromotionVideoPage() {
         </div>
       </section>
 
-
+      {/* カスタムカーソル */}
+      <motion.div
+        className="custom-cursor fixed top-0 left-0 w-8 h-8 rounded-full pointer-events-none z-50"
+        variants={cursorVariants}
+        animate={cursorVariant}
+        transition={{
+          type: "spring",
+          stiffness: 500,
+          damping: 28,
+          mass: 0.5,
+        }}
+      />
+     
+      {/* カーソルの内側の点 */}
+      <motion.div
+        className="fixed w-1.5 h-1.5 bg-white rounded-full pointer-events-none z-50"
+        style={{
+          x: mousePosition.x - 0.75,
+          y: mousePosition.y - 0.75,
+        }}
+        transition={{
+          type: "spring",
+          stiffness: 800,
+          damping: 25,
+          mass: 0.2,
+        }}
+      />
     </main>
   );
 } 

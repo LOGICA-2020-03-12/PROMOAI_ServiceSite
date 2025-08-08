@@ -217,6 +217,8 @@ export default function PromotionVideoPage() {
                 animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
                 transition={{ duration: 0.8, delay: index * 0.2 }}
                 className={`flex flex-col ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} items-center gap-8`}
+                onMouseEnter={enterHover}
+                onMouseLeave={leaveHover}
               >
                 <div className="flex-1">
                   <div className="flex items-center mb-4">
@@ -266,6 +268,8 @@ export default function PromotionVideoPage() {
               <Link
                 href="/estimate"
                 className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-bold text-lg rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                onMouseEnter={enterHover}
+                onMouseLeave={leaveHover}
               >
                 見積もりシミュレーター
                 <svg className="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

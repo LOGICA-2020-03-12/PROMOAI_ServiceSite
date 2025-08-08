@@ -166,11 +166,17 @@ const Navbar = () => {
 
             {/* Menu Content */}
             <div className="relative z-10 h-full flex flex-col justify-center">
-              <div className="container-custom px-4">
-
+              <div className="container-custom px-6">
+                {/* Logo in Menu */}
+                <motion.div
+                  variants={itemVariants}
+                  className="mb-12 text-center"
+                >
+                  <span className="text-3xl font-display font-bold text-secondary tracking-tight">PROMO AI</span>
+                </motion.div>
 
                 {/* Navigation Links */}
-                <div className="space-y-4 mb-8">
+                <div className="space-y-6 mb-12">
                   {navLinks.map((link) => (
                     <motion.div
                       key={link.name}
@@ -179,15 +185,15 @@ const Navbar = () => {
                     >
                       <Link
                         href={link.href}
-                        className="block py-3 px-4 rounded-lg bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 hover:border-secondary/30 transition-all duration-300 group"
+                        className="block py-4 px-6 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 hover:border-secondary/30 transition-all duration-300 group"
                         onClick={() => setIsOpen(false)}
                       >
                         <div className="flex items-center justify-between">
                           <div>
-                            <h3 className="text-lg font-bold text-white mb-0.5 group-hover:text-secondary transition-colors duration-300">
+                            <h3 className="text-xl font-bold text-white mb-1 group-hover:text-secondary transition-colors duration-300">
                               {link.name}
                             </h3>
-                            <p className="text-gray-400 text-xs group-hover:text-gray-300 transition-colors duration-300">
+                            <p className="text-gray-400 text-sm group-hover:text-gray-300 transition-colors duration-300">
                               {link.description}
                             </p>
                           </div>
@@ -195,7 +201,7 @@ const Navbar = () => {
                             className="text-secondary opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                             whileHover={{ x: 5 }}
                           >
-                            <FiArrowRight size={16} />
+                            <FiArrowRight size={20} />
                           </motion.div>
                         </div>
                       </Link>
@@ -210,19 +216,34 @@ const Navbar = () => {
                 >
                   <Link 
                     href="/contact" 
-                    className="inline-flex items-center justify-center w-full py-3 px-6 bg-gradient-to-r from-secondary to-amber-500 text-primary font-bold text-base rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                    className="inline-flex items-center justify-center w-full py-4 px-8 bg-gradient-to-r from-secondary to-amber-500 text-primary font-bold text-lg rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
                     onClick={() => setIsOpen(false)}
                   >
                     <span>お問い合わせ</span>
-                    <FiArrowRight className="ml-2" size={16} />
+                    <FiArrowRight className="ml-2" size={20} />
                   </Link>
                 </motion.div>
 
-
+                {/* Footer Info */}
+                <motion.div
+                  variants={itemVariants}
+                  className="mt-12 text-center text-gray-500 text-sm"
+                >
+                  <p>AIを活用した動画制作サービス</p>
+                  <p className="mt-1">プロモーションの常識を変える</p>
+                </motion.div>
               </div>
             </div>
 
-
+            {/* Close Button */}
+            <motion.button
+              variants={itemVariants}
+              className="absolute top-8 right-6 text-white hover:text-secondary transition-colors duration-300"
+              onClick={() => setIsOpen(false)}
+              aria-label="Close menu"
+            >
+              <FiX size={28} />
+            </motion.button>
           </motion.div>
         )}
       </AnimatePresence>

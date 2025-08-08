@@ -130,6 +130,8 @@ const Cases = () => {
           >
             <h2 
               className="text-3xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white"
+              onMouseEnter={enterHover}
+              onMouseLeave={leaveHover}
             >
               制作事例
             </h2>
