@@ -308,7 +308,7 @@ const EstimateSimulator = () => {
             <motion.div
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="mb-6 flex justify-start"
+              className="mb-6 flex justify-center"
             >
               <button
                 type="button"
