@@ -370,13 +370,13 @@ const EstimateSimulator = () => {
                       {Object.entries(estimateData)
                         .filter(([key, value]) => value && key !== questions[currentStep].id)
                         .map(([key, value]) => (
-                          <div key={key} className="py-2 border-b border-zinc-600 last:border-b-0">
-                            <div className="text-gray-300 text-sm mb-1">
+                          <div key={key} className="flex justify-between items-center py-2 border-b border-zinc-600 last:border-b-0">
+                            <span className="text-gray-300 text-sm">
                               {questions.find(q => q.id === key)?.question}
-                            </div>
-                            <div className="text-white font-medium">
+                            </span>
+                            <span className="text-white font-medium">
                               {value}
-                            </div>
+                            </span>
                           </div>
                         ))}
                     </div>
