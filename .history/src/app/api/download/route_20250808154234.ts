@@ -1,0 +1,90 @@
+import { NextResponse } from 'next/server';
+import { google } from 'googleapis';
+import { sheetsConfig } from '@/config/sheets';
+
+// Google Sheets APIの設定
+const auth = new google.auth.GoogleAuth({
+  credentials: {
+    client_email: sheetsConfig.clientEmail,
+    private_key: sheetsConfig.privateKey.replace(/\\n/g, '\n'),
+  },
+  scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+});
+
+const sheets = google.sheets({ version: 'v4', auth });
+
+export async function POST(request: Request) {
+  try {
+    console.log('=== Download API Start ===');
+    
+    // 環境変数のチェック
+    if (!sheetsConfig.privateKey) {
+      console.error('GOOGLE_SHEETS_PRIVATE_KEY is not set');
+      return NextResponse.json({ 
+        error: 'ローカル環境では環境変数が設定されていません。.env.localファイルを作成してください。',
+        details: 'GOOGLE_SHEETS_PRIVATE_KEY is not set'
+      }, { status: 500 });
+    }
+    
+    const formData = await request.json();
+    console.log('Download form data received:', formData);
+    
+    // 現在の日時を取得
+    const now = new Date().toLocaleString('ja-JP');
+    
+    // スプレッドシートに追加するデータ（K列まで）
+    const rowData = [
+      now,                    // A: 日時
+      formData.company,       // B: 会社名
+      formData.name,          // C: 担当者名
+      formData.email,         // D: メールアドレス
+      "",                     // E: 予算（空欄）
+      "",                     // F: 興味領域（空欄）
+      "",                     // G: 開始時期（空欄）
+      formData.message,       // H: メッセージ
+      "",                     // I: 参考URL（空欄）
+      "",                     // J: 見積もりデータ（空欄）
+      "資料ダウンロード申請"   // K: 対応状況
+    ];
+
+    console.log('Attempting to append download data to spreadsheet:', rowData);
+    console.log('Spreadsheet ID:', sheetsConfig.spreadsheetId);
+
+    // Google Sheets APIの認証テスト
+    try {
+      console.log('Testing Google Sheets API authentication...');
+      await auth.getClient();
+      console.log('Authentication successful');
+    } catch (authError) {
+      console.error('Authentication failed:', authError);
+      throw new Error(`認証エラー: ${authError}`);
+    }
+
+    // スプレッドシートにデータを追加
+    console.log('Appending download data to spreadsheet...');
+    const response = await sheets.spreadsheets.values.append({
+      spreadsheetId: sheetsConfig.spreadsheetId,
+      range: 'A:K', // A列からK列まで
+      valueInputOption: 'RAW',
+      requestBody: {
+        values: [rowData],
+      },
+    });
+
+    console.log('Google Sheets API response:', response.data);
+    console.log('資料ダウンロード申請がスプレッドシートに正常に追加されました');
+
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error('=== Download API Error ===');
+    console.error('Error type:', typeof error);
+    console.error('Error message:', error instanceof Error ? error.message : 'Unknown error');
+    console.error('Error stack:', error instanceof Error ? error.stack : 'No stack trace');
+    console.error('Full error object:', JSON.stringify(error, null, 2));
+    
+    return NextResponse.json({ 
+      error: '送信に失敗しました',
+      details: error instanceof Error ? error.message : 'Unknown error'
+    }, { status: 500 });
+  }
+} 
