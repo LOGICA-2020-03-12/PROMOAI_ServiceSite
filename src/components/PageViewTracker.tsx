@@ -15,7 +15,7 @@ export default function PageViewTracker() {
 
   useEffect(() => {
     if (pathname && window.gtag) {
-      window.gtag('config', 'G-PW0CFS9G6S', {
+      window.gtag('config', 'G-QBRDNM9D7J', {
         page_path: pathname,
       });
     }
