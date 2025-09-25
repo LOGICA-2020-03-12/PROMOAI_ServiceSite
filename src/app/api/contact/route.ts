@@ -19,10 +19,45 @@ const auth = new google.auth.GoogleAuth({
 
 const sheets = google.sheets({ version: 'v4', auth });
 
+// reCAPTCHA検証関数
+async function verifyRecaptcha(token: string): Promise<boolean> {
+  const secretKey = process.env.RECAPTCHA_SECRET_KEY;
+  if (!secretKey) {
+    console.error('reCAPTCHA secret key not found');
+    return false;
+  }
+
+  try {
+    const response = await fetch('https://www.google.com/recaptcha/api/siteverify', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: `secret=${secretKey}&response=${token}`,
+    });
+
+    const data = await response.json();
+    return data.success;
+  } catch (error) {
+    console.error('reCAPTCHA verification error:', error);
+    return false;
+  }
+}
+
 export async function POST(request: Request) {
   try {
     const formData = await request.json();
-    
+
+    // reCAPTCHA検証
+    if (!formData.recaptchaToken) {
+      return NextResponse.json({ error: 'reCAPTCHA認証が必要です' }, { status: 400 });
+    }
+
+    const isValidRecaptcha = await verifyRecaptcha(formData.recaptchaToken);
+    if (!isValidRecaptcha) {
+      return NextResponse.json({ error: 'reCAPTCHA認証に失敗しました' }, { status: 400 });
+    }
+
     // 現在の日時を取得
     const now = new Date().toLocaleString('ja-JP');
     

@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { motion } from "framer-motion";
+import ReCaptcha from "./ReCaptcha";
 
 interface EstimateData {
   genre: string;
@@ -74,6 +75,7 @@ const Contact = ({ estimateData }: ContactProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [submitError, setSubmitError] = useState("");
+  const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -99,6 +101,13 @@ const Contact = ({ estimateData }: ContactProps) => {
     setIsSubmitting(true);
     setSubmitError("");
 
+    // reCAPTCHA トークンの確認
+    if (!recaptchaToken) {
+      setSubmitError("reCAPTCHA認証を完了してください。");
+      setIsSubmitting(false);
+      return;
+    }
+
     try {
       // APIエンドポイントにフォームデータを送信
       const response = await fetch('/api/contact', {
@@ -106,7 +115,10 @@ const Contact = ({ estimateData }: ContactProps) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify({
+          ...formData,
+          recaptchaToken
+        })
       });
 
       if (response.ok) {
@@ -339,6 +351,14 @@ const Contact = ({ estimateData }: ContactProps) => {
                 />
               </div>
 
+              <div>
+                <ReCaptcha
+                  onChange={setRecaptchaToken}
+                  onError={() => setSubmitError("reCAPTCHA認証でエラーが発生しました。")}
+                  onExpired={() => setSubmitError("reCAPTCHA認証が期限切れです。再度認証してください。")}
+                />
+              </div>
+
               {submitError && (
                 <div className="bg-red-800 bg-opacity-20 border border-red-600 rounded-lg p-4">
                   <p className="text-red-400">{submitError}</p>
@@ -348,7 +368,7 @@ const Contact = ({ estimateData }: ContactProps) => {
               <div className="text-center">
                 <button
                   type="submit"
-                  disabled={isSubmitting}
+                  disabled={isSubmitting || !recaptchaToken}
                   className="btn-primary px-10 py-3"
                 >
                   {isSubmitting ? "送信中..." : "送信する"}
